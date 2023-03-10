@@ -39,4 +39,13 @@ public class ObjectSelection : MonoBehaviour
 
         showLeftControllerCanvas();
     }
+
+    public void DeleteSelectedObject()
+    {
+        if (selectedObject != null) Destroy(selectedObject);
+
+        showLeftControllerCanvas();
+
+        selectedObject = null;
+    }
 }
