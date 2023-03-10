@@ -6,10 +6,8 @@ public class ObjectSelection : MonoBehaviour
 {
 
     public GameObject selectedObject;
-
     public GameObject editObjectCanvas;
     public GameObject leftControllerCanvas;
-
 
     public void showEditCanvas()
     {

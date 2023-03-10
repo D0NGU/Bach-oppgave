@@ -11,6 +11,7 @@ public class Tracker : MonoBehaviour
     [SerializeField] private InputActionAsset ActionAsset;
 
     public GameObject gazeSphere;
+    public WristUI wristUI;
 
     private void OnEnable()
     {
@@ -18,34 +19,29 @@ public class Tracker : MonoBehaviour
         {
             ActionAsset.Enable();
         }
-
     }
     
 
     private void Update()
     {
-
-        var eyeTrackingData = TobiiXR.GetEyeTrackingData(TobiiXR_TrackingSpace.World);
-        var rayOrigin = eyeTrackingData.GazeRay.Origin;
-        var rayDirection = eyeTrackingData.GazeRay.Direction;
-        
-
-        RaycastHit hit;
-        // Does the ray intersect any objects excluding the player layer
-        if (Physics.Raycast(rayOrigin, rayDirection, out hit, Mathf.Infinity))
+        if (wristUI.showGazeDots)
         {
-            GameObject sphere = Instantiate(gazeSphere, hit.transform.position, Quaternion.identity);
-            StartCoroutine(deleteAfter(sphere));
-            
-        }
-          
-        Debug.Log(hit.transform.position.ToString());
+            var eyeTrackingData = TobiiXR.GetEyeTrackingData(TobiiXR_TrackingSpace.World);
+            var rayOrigin = eyeTrackingData.GazeRay.Origin;
+            var rayDirection = eyeTrackingData.GazeRay.Direction;
 
+            RaycastHit hit;
+            if (Physics.Raycast(rayOrigin, rayDirection, out hit, Mathf.Infinity) && hit.collider.tag != "Controller")
+            {
+                GameObject sphere = Instantiate(gazeSphere, hit.point, Quaternion.identity);
+                StartCoroutine(deleteAfter(sphere));
+            }
+        }
     }
+
 
     private IEnumerator deleteAfter(GameObject objectToDelete)
     {
-
         yield return new WaitForSeconds(0.1f);
 
         if (objectToDelete != null) Destroy(objectToDelete);

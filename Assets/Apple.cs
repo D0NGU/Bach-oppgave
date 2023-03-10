@@ -4,27 +4,22 @@ using UnityEngine;
 
 public class Apple : MonoBehaviour
 {
-    private GameObject ObjectSelectionManager;
+    private GameObject objectSelectionController;
+    
 
-    // Start is called before the first frame update
     void Start()
     {
-        ObjectSelectionManager = GameObject.Find("ObjectSelectionManager");
+        objectSelectionController = GameObject.Find("ObjectSelectionController");
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 
     public void Selected()
     {
         // Checks if this gameobject is already selected
-        if (!GameObject.ReferenceEquals(ObjectSelectionManager.GetComponent<ObjectSelection>().selectedObject, this.gameObject))
+        if (!GameObject.ReferenceEquals(objectSelectionController.GetComponent<ObjectSelection>().selectedObject, this.gameObject))
         {
 
-            ObjectSelectionManager.GetComponent<ObjectSelection>().ChangeSelectedObject(this.gameObject);
+            objectSelectionController.GetComponent<ObjectSelection>().ChangeSelectedObject(this.gameObject);
 
             this.gameObject.GetComponent<MeshRenderer>().material.EnableKeyword("_EMISSION");
         }

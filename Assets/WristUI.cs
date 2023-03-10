@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 
 public class WristUI : MonoBehaviour
 {
     public InputActionAsset inputActions;
+    public bool showGazeDots = false;
 
     private Canvas wristUI;
     private InputAction menuButton;
-
-    // Start is called before the first frame update
+    
     void Start()
     {
         wristUI = GetComponent<Canvas>();
@@ -28,4 +29,15 @@ public class WristUI : MonoBehaviour
     {
         wristUI.enabled = !wristUI.enabled;
     }
+
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene("MainScreen");
+    }
+
+    public void ToggleGazeDots()
+    {
+        showGazeDots = !showGazeDots;
+    }
+    
 }
