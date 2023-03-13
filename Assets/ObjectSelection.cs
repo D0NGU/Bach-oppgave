@@ -40,10 +40,20 @@ public class ObjectSelection : MonoBehaviour
 
     public void DeleteSelectedObject()
     {
-        if (selectedObject != null) Destroy(selectedObject);
+        if (selectedObject != null) selectedObject.GetComponent<Apple>().DeleteObject();
 
         showLeftControllerCanvas();
 
         selectedObject = null;
+    }
+
+    public void EditMovement()
+    {
+        selectedObject.GetComponent<Apple>().EditMovement();
+    }
+    
+    public void Preview()
+    {
+        selectedObject.GetComponent<Apple>().Preview();
     }
 }
