@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using ViveSR.anipal.Eye;
 using System;
 
-public class MenutControllsScript : MonoBehaviour
+public class MenuControlsScript : MonoBehaviour
 {
 
     public void exitApplication()
