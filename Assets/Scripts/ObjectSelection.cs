@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ObjectSelection : MonoBehaviour
 {
-
+    public SaveObjectsScript saveToFile = new();
     public GameObject selectedObject;
     public GameObject editObjectCanvas;
     public GameObject leftControllerCanvas;
@@ -17,6 +17,10 @@ public class ObjectSelection : MonoBehaviour
     public Button removeMovementButton;
     public Button saveMovementButton;
     public Button loopMovementButton;
+
+
+    //testing loading
+    public GameObject prefab;
 
 
     public void showEditCanvas()
@@ -135,6 +139,45 @@ public class ObjectSelection : MonoBehaviour
         selectedObject.GetComponent<SelectableObject>().ToggleLoopMovement();
         if (selectedObject.GetComponent<SelectableObject>().loopMovement) loopMovementButton.GetComponent<Image>().color = new Color(0f / 255, 160f / 255, 255f / 255);
         else loopMovementButton.GetComponent<Image>().color = new Color(1f, 1f, 1f);
+    }
+
+    public void SaveTest()
+    {
+        foreach (Transform child in transform )
+        {
+            SelectableObjectDataClass dataClass = new();
+            SelectableObject so = child.Find("Sphere").GetComponent<SelectableObject>();
+            dataClass.startPosistion = so.startPos;
+            dataClass.endPosistion = so.endPos;
+            dataClass.time = so.speed;
+            dataClass.hasMovement = so.hasMovement;
+            saveToFile.AddObjectDataToList(dataClass);
+        }
+        saveToFile.SaveToJSON();
+    }
+
+    //test method, move to correct place later
+    public void LoadTest()
+    {
+        SaveObjectsScript loadedData = new();
+        loadedData.LoadFromJSON();
+        foreach (SelectableObjectDataClass dataClass in loadedData.selectableObjectData)
+        {
+            GameObject o = Instantiate(prefab, transform);
+            SelectableObject so = o.transform.Find("Sphere").GetComponent<SelectableObject>();
+
+            // Sets the position of the prefab
+            so.gameObject.transform.position = dataClass.startPosistion;
+            o.transform.Find("Ghost Sphere").transform.position = dataClass.endPosistion;
+
+            // Sets public variables in script to correct values
+            so.startPos = dataClass.startPosistion;
+            so.endPos = dataClass.endPosistion;
+            so.speed = dataClass.time;
+            so.hasMovement = dataClass.hasMovement;
+
+            so.ShowGhostSphere(so.hasMovement);
+        }
     }
 
 }

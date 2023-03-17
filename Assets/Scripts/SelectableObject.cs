@@ -11,8 +11,8 @@ public class SelectableObject : MonoBehaviour
 
     private Rigidbody ghostRb;
     private LineRenderer lineRenderer;
-    Vector3 startPos;
-    Vector3 endPos;
+    public Vector3 startPos;
+    public Vector3 endPos;
     public float speed = 1;
     float t;
 
@@ -95,8 +95,7 @@ public class SelectableObject : MonoBehaviour
     {
         if (!hasMovement) ghostObject.transform.position = transform.position;
 
-        ghostObject.SetActive(true);
-        GetComponent<LineRenderer>().enabled = true;
+        ShowGhostSphere(true);
 
         hasMovement = true;
 
@@ -113,8 +112,7 @@ public class SelectableObject : MonoBehaviour
     {
         hasMovement = false;
 
-        ghostObject.SetActive(false);
-        GetComponent<LineRenderer>().enabled = false;
+        ShowGhostSphere(false);
     }
 
     public void SaveMovement()
@@ -153,5 +151,11 @@ public class SelectableObject : MonoBehaviour
 
         t = 0;
         move = !move;
+    }
+
+    public void ShowGhostSphere(bool enable)
+    {
+        ghostObject.SetActive(enable);
+        GetComponent<LineRenderer>().enabled = enable;
     }
 }
