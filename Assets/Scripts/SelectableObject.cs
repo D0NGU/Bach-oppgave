@@ -21,9 +21,14 @@ public class SelectableObject : MonoBehaviour
     public bool loopMovement = false;
     public bool hasMovement = false;
 
+    private Dictionary<string, float> testAreaBounds;
+
     void Start()
     {
         objectSelectionController = GameObject.Find("ObjectSelectionController");
+
+        testAreaBounds = GameObject.Find("TestArea").GetComponent<TestArea>().GetTestAreaBounds();
+
         lineRenderer = GetComponent<LineRenderer>();
         ghostRb = ghostObject.GetComponent<Rigidbody>();
     }
@@ -65,7 +70,21 @@ public class SelectableObject : MonoBehaviour
                 //transform.position = Vector3.MoveTowards(transform.position, startPos, step);
             }
         }
-        
+
+        // Clamps position of gameObject to stay within the bounds of the testArea
+        float radius = GetComponent<SphereCollider>().radius * Mathf.Max(transform.lossyScale.x, transform.lossyScale.y, transform.lossyScale.z); ;
+        transform.position = new Vector3(
+            Mathf.Clamp(transform.position.x, testAreaBounds["minX"] + radius, testAreaBounds["maxX"] - radius),
+            Mathf.Clamp(transform.position.y, testAreaBounds["minY"] + radius, testAreaBounds["maxY"] - radius),
+            Mathf.Clamp(transform.position.z, testAreaBounds["minZ"] + radius, testAreaBounds["maxZ"] - radius));
+
+        // Clamps position of ghost gameObject to stay within the bounds of the testArea
+        float ghostRadius = ghostObject.GetComponent<SphereCollider>().radius * Mathf.Max(transform.lossyScale.x, transform.lossyScale.y, transform.lossyScale.z); ;
+        ghostObject.transform.position = new Vector3(
+            Mathf.Clamp(ghostObject.transform.position.x, testAreaBounds["minX"] + ghostRadius, testAreaBounds["maxX"] - ghostRadius),
+            Mathf.Clamp(ghostObject.transform.position.y, testAreaBounds["minY"] + ghostRadius, testAreaBounds["maxY"] - ghostRadius),
+            Mathf.Clamp(ghostObject.transform.position.z, testAreaBounds["minZ"] + ghostRadius, testAreaBounds["maxZ"] - ghostRadius));
+
     }
 
 

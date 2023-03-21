@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 public class WristUI : MonoBehaviour
 {
     public InputActionAsset inputActions;
-    public bool showGazeDots = false;
 
     private Canvas wristUI;
     private InputAction menuButton;
@@ -28,16 +27,6 @@ public class WristUI : MonoBehaviour
     public void ToggleMenu(InputAction.CallbackContext context)
     {
         wristUI.enabled = !wristUI.enabled;
-    }
-
-    public void GoToMainMenu()
-    {
-        SceneManager.LoadScene("MainScreen");
-    }
-
-    public void ToggleGazeDots()
-    {
-        showGazeDots = !showGazeDots;
     }
     
 }
