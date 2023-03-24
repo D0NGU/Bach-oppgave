@@ -28,5 +28,10 @@ public class WristUI : MonoBehaviour
     {
         wristUI.enabled = !wristUI.enabled;
     }
-    
+
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene("MainScreen");
+    }
+
 }

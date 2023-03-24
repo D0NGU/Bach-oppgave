@@ -6,6 +6,7 @@ public class TestArea : MonoBehaviour
 {
 
     public GameObject sphere;
+    public GameObject testObjectParent;
 
     public SaveObjectsScript saveToFile = new();
 
@@ -16,13 +17,13 @@ public class TestArea : MonoBehaviour
 
     public void Spawn()
     {
-        Instantiate(sphere, transform);
+        Instantiate(sphere, testObjectParent.transform);
     }
 
 
     public void SaveTest()
     {
-        foreach (Transform child in transform)
+        foreach (Transform child in testObjectParent.transform)
         {
             SelectableObjectDataClass dataClass = new();
             SelectableObject so = child.Find("Sphere").GetComponent<SelectableObject>();
@@ -32,32 +33,10 @@ public class TestArea : MonoBehaviour
             dataClass.hasMovement = so.hasMovement;
             saveToFile.AddObjectDataToList(dataClass);
         }
-        saveToFile.SaveToJSON();
+        saveToFile.SaveToJSON("wow");
     }
 
-    //test method, move to correct place later
-    public void LoadTest()
-    {
-        SaveObjectsScript loadedData = new();
-        loadedData.LoadFromJSON();
-        foreach (SelectableObjectDataClass dataClass in loadedData.selectableObjectData)
-        {
-            GameObject o = Instantiate(sphere, transform);
-            SelectableObject so = o.transform.Find("Sphere").GetComponent<SelectableObject>();
-
-            // Sets the position of the prefab
-            so.gameObject.transform.position = dataClass.startPosistion;
-            o.transform.Find("Ghost Sphere").transform.position = dataClass.endPosistion;
-
-            // Sets public variables in script to correct values
-            so.startPos = dataClass.startPosistion;
-            so.endPos = dataClass.endPosistion;
-            so.speed = dataClass.time;
-            so.hasMovement = dataClass.hasMovement;
-
-            so.ShowGhostSphere(so.hasMovement);
-        }
-    }
+    
     public Dictionary<string, float> GetTestAreaBounds()
     {
         // Dictionary that contains min and max values for x, y and z positions for objects within the test area
