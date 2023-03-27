@@ -23,7 +23,7 @@ public class MenuControlsScript : MonoBehaviour
 
     public void EnterEditor()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("EditTest");
     }
 
     public void EnterCalibrator()

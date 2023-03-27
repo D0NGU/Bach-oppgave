@@ -7,11 +7,15 @@ public class SaveObjectsScript
     public SelectableObjectDataListClass selectableObjectData = new();
     
     //TODO create folder if it doesnt exist from before in the dir
-    public void SaveToJSON(string fileName)
+    public void SaveToJSON(string fileName, bool overwrite)
     {
         string dataJSONString = JsonUtility.ToJson(selectableObjectData);
         Debug.Log(dataJSONString);
-        string filePath = Application.dataPath + "/TestFiles/" + fileName.Replace(" ", "") + ".json"; 
+
+        string filePath;
+        if (overwrite) filePath = TestNameStatic.testFilePath;
+        else filePath = Application.dataPath + "/TestFiles/" + fileName.Replace(" ", "") + ".json"; 
+
         Debug.Log(filePath);
         System.IO.File.WriteAllText(filePath, dataJSONString);
         Debug.Log("Save file created");

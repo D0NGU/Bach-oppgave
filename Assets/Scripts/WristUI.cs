@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class WristUI : MonoBehaviour
 {
     public InputActionAsset inputActions;
+    public GameObject xrOrigin;
 
     private Canvas wristUI;
     private InputAction menuButton;
@@ -29,9 +30,9 @@ public class WristUI : MonoBehaviour
         wristUI.enabled = !wristUI.enabled;
     }
 
-    public void GoToMainMenu()
+    public void ResetPlayerPosition()
     {
-        SceneManager.LoadScene("MainScreen");
+        xrOrigin.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
     }
 
 }

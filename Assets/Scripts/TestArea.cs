@@ -21,7 +21,7 @@ public class TestArea : MonoBehaviour
     }
 
 
-    public void SaveTest()
+    public void SaveTest(bool overwrite)
     {
         foreach (Transform child in testObjectParent.transform)
         {
@@ -33,7 +33,7 @@ public class TestArea : MonoBehaviour
             dataClass.hasMovement = so.hasMovement;
             saveToFile.AddObjectDataToList(dataClass);
         }
-        saveToFile.SaveToJSON("wow");
+        saveToFile.SaveToJSON("wow", overwrite);
     }
 
     
