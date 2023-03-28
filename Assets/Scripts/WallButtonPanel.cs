@@ -22,4 +22,5 @@ public class WallButtonPanel : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
 }

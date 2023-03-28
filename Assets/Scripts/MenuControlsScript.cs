@@ -14,6 +14,7 @@ public class MenuControlsScript : MonoBehaviour
     public Transform newParent;
     List<GameObject> testButtonList = new();
     public GameObject scrollView;
+    public GameObject scrollViewButtons;
     
     public void ExitApplication()
     {
@@ -52,8 +53,7 @@ public class MenuControlsScript : MonoBehaviour
             {
                 GameObject GObutton = Instantiate(buttonPrefab, newParent);
                 GObutton.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = f.Name.Remove(f.Name.Length - 5);
-                if (SceneManager.GetActiveScene().name == "MainScreen") GObutton.GetComponent<Button>().onClick.AddListener(() => OnTestButtonClick(f.FullName, false));
-                else GObutton.GetComponent<Button>().onClick.AddListener(() => OnTestButtonClick(f.FullName, true));
+                GObutton.GetComponent<Button>().onClick.AddListener(() => OnTestButtonClick(f.FullName));
                 testButtonList.Add(GObutton);
 
             }
@@ -61,17 +61,15 @@ public class MenuControlsScript : MonoBehaviour
        
     }
 
-    private void OnTestButtonClick(string path, bool editorScene)
+    private void OnTestButtonClick(string path)
     {
         TestNameStatic.testFilePath = path;
-        if (editorScene)
-        {
-            GetComponent<TestLoader>().LoadTest();
-        }
-        else
-        {
-            SceneManager.LoadScene("RunTest");
-        }
+        scrollViewButtons.SetActive(true);
         
+    }
+
+    public void GoToRunTest()
+    {
+        SceneManager.LoadScene("RunTest");
     }
 }

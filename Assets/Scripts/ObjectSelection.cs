@@ -14,7 +14,6 @@ public class ObjectSelection : MonoBehaviour
 
     public TMP_Text editMovementText;
 
-
     public void showEditCanvas()
     {
         leftControllerCanvas.SetActive(false);
@@ -27,6 +26,7 @@ public class ObjectSelection : MonoBehaviour
 
     public void showLeftControllerCanvas()
     {
+        editMovementCanvas.SetActive(false);
         editObjectCanvas.SetActive(false);
         leftControllerCanvas.SetActive(true);
     }

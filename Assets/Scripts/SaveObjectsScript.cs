@@ -13,7 +13,7 @@ public class SaveObjectsScript
         Debug.Log(dataJSONString);
 
         string filePath;
-        if (overwrite) filePath = TestNameStatic.testFilePath;
+        if (overwrite) filePath = TestNameStatic.currentTestFilePath;
         else filePath = Application.dataPath + "/TestFiles/" + fileName.Replace(" ", "") + ".json"; 
 
         Debug.Log(filePath);

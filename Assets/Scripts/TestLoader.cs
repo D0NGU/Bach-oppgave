@@ -23,6 +23,9 @@ public class TestLoader : MonoBehaviour
         }
         SaveObjectsScript loadedData = new();
         loadedData.LoadFromJSON();
+
+        TestNameStatic.currentTestFilePath = TestNameStatic.testFilePath;
+
         foreach (SelectableObjectDataClass dataClass in loadedData.selectableObjectData)
         {
             GameObject o = Instantiate(spheresPrefab, testObjectParent.transform);

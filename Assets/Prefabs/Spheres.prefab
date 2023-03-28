@@ -26,7 +26,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5938659737876212373}
   - {fileID: 2847305531972282501}
@@ -148,10 +148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e34040cb11b58745a7a3381362ea1d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eyePose: {fileID: -6051953143402576729, guid: d665f4357029d5c4e8da1168515e5e67, type: 3}
-  ActionAsset: {fileID: -944628639613478452, guid: d665f4357029d5c4e8da1168515e5e67, type: 3}
-  gazeSphere: {fileID: 0}
-  wristUI: {fileID: 0}
 --- !u!114 &5938659737876212456
 MonoBehaviour:
   m_ObjectHideFlags: 0

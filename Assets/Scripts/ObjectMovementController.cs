@@ -20,6 +20,7 @@ public class ObjectMovementController : MonoBehaviour
     public Button saveMovementButton;
     public Button loopMovementButton;
 
+
     public void EditMovement()
     {
         objectSelection.selectedObject.GetComponent<SelectableObject>().EditMovement();

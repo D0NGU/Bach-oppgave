@@ -8,7 +8,6 @@ public class TestArea : MonoBehaviour
     public GameObject sphere;
     public GameObject testObjectParent;
 
-    public SaveObjectsScript saveToFile = new();
 
     public GameObject topRightBackCorner;
     public GameObject bottomRightFrontCorner;
@@ -18,22 +17,6 @@ public class TestArea : MonoBehaviour
     public void Spawn()
     {
         Instantiate(sphere, testObjectParent.transform);
-    }
-
-
-    public void SaveTest(bool overwrite)
-    {
-        foreach (Transform child in testObjectParent.transform)
-        {
-            SelectableObjectDataClass dataClass = new();
-            SelectableObject so = child.Find("Sphere").GetComponent<SelectableObject>();
-            dataClass.startPosistion = so.startPos;
-            dataClass.endPosistion = so.endPos;
-            dataClass.time = so.speed;
-            dataClass.hasMovement = so.hasMovement;
-            saveToFile.AddObjectDataToList(dataClass);
-        }
-        saveToFile.SaveToJSON("wow", overwrite);
     }
 
     
