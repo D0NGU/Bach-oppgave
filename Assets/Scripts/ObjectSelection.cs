@@ -42,7 +42,11 @@ public class ObjectSelection : MonoBehaviour
 
     public void RemoveSelection()
     {
-        selectedObject.GetComponent<MeshRenderer>().material.DisableKeyword("_EMISSION");
+        if(selectedObject != null)
+        {
+            selectedObject.GetComponent<MeshRenderer>().material.DisableKeyword("_EMISSION");
+        }
+        
         selectedObject = null;
 
         showLeftControllerCanvas();

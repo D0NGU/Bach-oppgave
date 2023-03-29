@@ -151,7 +151,13 @@ public class SelectableObject : MonoBehaviour
 
         loopMovement = !loopMovement;
     }
-    
+
+    public void ShowGhostSphere(bool enable)
+    {
+        ghostObject.SetActive(enable);
+        GetComponent<LineRenderer>().enabled = enable;
+    }
+
     public void Preview()
     {
         if (move)
@@ -170,11 +176,5 @@ public class SelectableObject : MonoBehaviour
 
         t = 0;
         move = !move;
-    }
-
-    public void ShowGhostSphere(bool enable)
-    {
-        ghostObject.SetActive(enable);
-        GetComponent<LineRenderer>().enabled = enable;
     }
 }

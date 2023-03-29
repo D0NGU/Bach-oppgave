@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8858821537299707527}
   - component: {fileID: 8858821537299707520}
+  - component: {fileID: 1827160715956816263}
   m_Layer: 0
   m_Name: TestArea
   m_TagString: Untagged
@@ -56,6 +57,20 @@ MonoBehaviour:
   topRightBackCorner: {fileID: 8858821538839937813}
   bottomRightFrontCorner: {fileID: 8858821537312918292}
   bottomLeftBackCorner: {fileID: 8858821538977719355}
+--- !u!114 &1827160715956816263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8858821537299707526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe16035a08f9231488a43e6f9507db4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spheresPrefab: {fileID: 5938659737412088858, guid: 408a60fbae0a8cd4d8f4674a3125d350, type: 3}
+  testObjectParent: {fileID: 8858821538725327463}
 --- !u!1 &8858821537312918292
 GameObject:
   m_ObjectHideFlags: 0

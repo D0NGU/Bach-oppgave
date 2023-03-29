@@ -14,13 +14,15 @@ public class SaveObjectsScript
 
         string filePath;
         if (overwrite) filePath = TestNameStatic.currentTestFilePath;
-        else filePath = Application.dataPath + "/TestFiles/" + fileName.Replace(" ", "") + ".json"; 
+        else filePath = Application.dataPath + "/TestFiles/" + fileName.Replace(" ", "") + ".json";
+
+        TestNameStatic.currentTestFilePath = filePath;
 
         Debug.Log(filePath);
         System.IO.File.WriteAllText(filePath, dataJSONString);
         Debug.Log("Save file created");
     }
-
+    
     public void LoadFromJSON()
     {
         if (System.IO.File.Exists(TestNameStatic.testFilePath))

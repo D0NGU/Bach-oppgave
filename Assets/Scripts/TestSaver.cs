@@ -23,5 +23,6 @@ public class TestSaver : MonoBehaviour
             saveToFile.AddObjectDataToList(dataClass);
         }
         saveToFile.SaveToJSON(inputField.text, overwrite);
+        saveToFile = new();
     }
 }
