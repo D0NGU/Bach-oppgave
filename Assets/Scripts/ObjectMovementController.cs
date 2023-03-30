@@ -53,13 +53,7 @@ public class ObjectMovementController : MonoBehaviour
             previewText.GetComponent<TextMeshProUGUI>().text = "Start preview";
         }
     }
-    /*
-    public void EditSpeed(float value)
-    {
-        selectedObject.GetComponent<SelectableObject>().SetSpeed(value);
-        Debug.Log(value);
-    }
-    */
+
 
     public void IncreaseTime()
     {
