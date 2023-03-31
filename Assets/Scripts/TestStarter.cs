@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Tobii.XR;
-using System.Text;
 using System.IO;
 using System;
 
@@ -131,6 +130,11 @@ public class TestStarter : MonoBehaviour
         // The path of the file to store the data specified by the user
         string newFilePath = Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + inputField.text + ".csv");
 
+        if (File.Exists(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + inputField.text + ".csv")))
+        {
+            File.Delete(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + inputField.text + ".csv"));
+        }
+
         // Moves data from the temporary data file to a new file with user specified name
         File.Move(temporaryDataFilePath, newFilePath);
     }
@@ -141,5 +145,4 @@ public class TestStarter : MonoBehaviour
         sw.WriteLine(testArea.bottomLeftBackCorner.transform.position.ToString());
         sw.WriteLine(testArea.topRightBackCorner.transform.position.ToString());
     }
-
 }

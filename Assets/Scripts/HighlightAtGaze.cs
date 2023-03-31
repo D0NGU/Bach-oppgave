@@ -15,6 +15,8 @@ namespace Tobii.XR.Examples.GettingStarted
         private Renderer _renderer;
         private Color _originalColor;
         private Color _targetColor;
+        private float timer = 0;
+        public float limit = 1.5f;
 
         //The method of the "IGazeFocusable" interface, which will be called when this object receives or loses focus
         public void GazeFocusChanged(bool hasFocus)
@@ -40,14 +42,30 @@ namespace Tobii.XR.Examples.GettingStarted
 
         private void Update()
         {
-            //This lerp will fade the color of the object
-            if (_renderer.material.HasProperty(_baseColor)) // new rendering pipeline (lightweight, hd, universal...)
+            if(_renderer.material.color != Color.green)
             {
-                _renderer.material.SetColor(_baseColor, Color.Lerp(_renderer.material.GetColor(_baseColor), _targetColor, Time.deltaTime * (1 / animationTime)));
-            }
-            else // old standard rendering pipline
-            {
-                _renderer.material.color = Color.Lerp(_renderer.material.color, _targetColor, Time.deltaTime * (1 / animationTime));
+                //This lerp will fade the color of the object
+                if (_renderer.material.HasProperty(_baseColor)) // new rendering pipeline (lightweight, hd, universal...)
+                {
+                    _renderer.material.SetColor(_baseColor, Color.Lerp(_renderer.material.GetColor(_baseColor), _targetColor, Time.deltaTime * (1 / animationTime)));
+                }
+                else // old standard rendering pipline
+                {
+                    _renderer.material.color = Color.Lerp(_renderer.material.color, _targetColor, Time.deltaTime * (1 / animationTime));
+                }
+
+                if (_targetColor == highlightColor)
+                {
+                    timer += Time.deltaTime;
+                    if (timer > limit)
+                    {
+                        _renderer.material.color = Color.green;
+                    }
+                }
+                else
+                {
+                    timer = 0;
+                }
             }
         }
     }

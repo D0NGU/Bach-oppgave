@@ -20,6 +20,7 @@ public class SelectableObject : MonoBehaviour
     private bool reverse = false;
     public bool loopMovement = false;
     public bool hasMovement = false;
+    public bool verified = false;
 
     private Dictionary<string, float> testAreaBounds;
 
