@@ -104,7 +104,7 @@ public class TestStarter : MonoBehaviour
         foreach (Transform child in testObjectParent.transform)
         {
             SelectableObject so = child.Find("Sphere").GetComponent<SelectableObject>();
-            if (so.hasMovement) so.Preview();
+            so.Preview();
         }
     }
 
@@ -134,6 +134,8 @@ public class TestStarter : MonoBehaviour
         {
             File.Delete(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + inputField.text + ".csv"));
         }
+
+        // Put data processing here
 
         // Moves data from the temporary data file to a new file with user specified name
         File.Move(temporaryDataFilePath, newFilePath);

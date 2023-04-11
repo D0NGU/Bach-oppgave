@@ -20,6 +20,8 @@ public class TestSaver : MonoBehaviour
             dataClass.endPosistion = so.endPos;
             dataClass.time = so.speed;
             dataClass.hasMovement = so.hasMovement;
+            dataClass.loopMovement = so.loopMovement;
+            dataClass.objectType = so.objectType;
             saveToFile.AddObjectDataToList(dataClass);
         }
         saveToFile.SaveToJSON(inputField.text, overwrite);

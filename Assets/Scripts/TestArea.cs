@@ -33,4 +33,48 @@ public class TestArea : MonoBehaviour
 
         return dict;
     }
+
+    public void HideRightSide(bool toggle)
+    {
+        foreach (Transform child in testObjectParent.transform)
+        {
+            if (child.Find("Sphere").transform.position.x >= 0)
+            {
+                if (toggle)
+                {
+                    child.gameObject.SetActive(!child.gameObject.activeSelf);
+                }
+                else
+                {
+                    child.gameObject.SetActive(true);
+                }
+            }
+        }
+    }
+
+    public void HideLeftSide(bool toggle)
+    {
+        foreach (Transform child in testObjectParent.transform)
+        {
+            if (child.Find("Sphere").transform.position.x < 0)
+            {
+                if (toggle)
+                {
+                    child.gameObject.SetActive(!child.gameObject.activeSelf);
+                }
+                else
+                {
+                    child.gameObject.SetActive(true);
+                }
+            }
+        }
+    }
+
+    public void ShowAllChildren()
+    {
+        foreach (Transform child in testObjectParent.transform)
+        {
+            child.gameObject.SetActive(true);
+        }
+    }
 }

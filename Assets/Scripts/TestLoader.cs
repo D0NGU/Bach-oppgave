@@ -40,6 +40,12 @@ public class TestLoader : MonoBehaviour
             so.endPos = dataClass.endPosistion;
             so.speed = dataClass.time;
             so.hasMovement = dataClass.hasMovement;
+            so.loopMovement = dataClass.loopMovement;
+            so.objectType = dataClass.objectType;
+
+            if (so.objectType == "fullsphere") so.ChangeToFullSphere();
+            else if (so.objectType == "righthalf") so.ChangeToRightHalf();
+            else if (so.objectType == "lefthalf") so.ChangeToLeftHalf();
 
             so.ShowGhostSphere(so.hasMovement);
         }

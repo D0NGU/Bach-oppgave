@@ -61,6 +61,11 @@ public class ObjectSelection : MonoBehaviour
         selectedObject = null;
     }
 
-   
+    public void ChangeSphereType(string objectType)
+    {
+        if (objectType == "fullsphere") selectedObject.GetComponent<SelectableObject>().ChangeToFullSphere();
+        else if (objectType == "lefthalf") selectedObject.GetComponent<SelectableObject>().ChangeToLeftHalf();
+        else if (objectType == "righthalf") selectedObject.GetComponent<SelectableObject>().ChangeToRightHalf();
+    }
 
 }

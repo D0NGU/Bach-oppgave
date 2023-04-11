@@ -6,17 +6,26 @@ public class SelectableObject : MonoBehaviour
 {
     private GameObject objectSelectionController;
 
-    public GameObject ghostObject;
-    public Rigidbody rb;
+    public GameObject sphereChild;
 
+    private GameObject fullSphere;
+    private GameObject rightHalf;
+    private GameObject leftHalf;
+
+
+    private GameObject ghostSphere;
+    private Rigidbody rb;
     private Rigidbody ghostRb;
     private LineRenderer lineRenderer;
+    private Color originalColor;
+
+    public string objectType = "fullsphere";
     public Vector3 startPos;
     public Vector3 endPos;
     public float speed = 1;
     float t;
 
-    public bool move = false;
+    public bool previewActive = false;
     private bool reverse = false;
     public bool loopMovement = false;
     public bool hasMovement = false;
@@ -24,25 +33,38 @@ public class SelectableObject : MonoBehaviour
 
     private Dictionary<string, float> testAreaBounds;
 
-    void Start()
+    void Awake()
     {
         objectSelectionController = GameObject.Find("ObjectSelectionController");
 
         testAreaBounds = GameObject.Find("TestArea").GetComponent<TestArea>().GetTestAreaBounds();
 
+        ghostSphere = transform.parent.Find("Ghost Sphere").gameObject;
+        ghostRb = ghostSphere.GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
+
         lineRenderer = GetComponent<LineRenderer>();
-        ghostRb = ghostObject.GetComponent<Rigidbody>();
+
+        fullSphere = transform.Find("FullSphere").gameObject;
+        rightHalf = transform.Find("RightHalf").gameObject;
+        leftHalf = transform.Find("LeftHalf").gameObject;
+
+        if (sphereChild != null)
+        {
+            originalColor = sphereChild.GetComponent<Renderer>().material.color;
+        }
     }
-     
+
+
     private void Update()
     {
         
         var points = new Vector3[2];
         points[0] = rb.position;
         points[1] = ghostRb.position;
-        lineRenderer.SetPositions(points);
+        if (lineRenderer != null) lineRenderer.SetPositions(points);
         
-        if (move)
+        if (previewActive && hasMovement)
         {
             if (Vector3.Distance(endPos, transform.position) < 0.01f && !reverse && loopMovement)
             {
@@ -80,11 +102,11 @@ public class SelectableObject : MonoBehaviour
             Mathf.Clamp(transform.position.z, testAreaBounds["minZ"] + radius, testAreaBounds["maxZ"] - radius));
 
         // Clamps position of ghost gameObject to stay within the bounds of the testArea
-        float ghostRadius = ghostObject.GetComponent<SphereCollider>().radius * Mathf.Max(transform.lossyScale.x, transform.lossyScale.y, transform.lossyScale.z); ;
-        ghostObject.transform.position = new Vector3(
-            Mathf.Clamp(ghostObject.transform.position.x, testAreaBounds["minX"] + ghostRadius, testAreaBounds["maxX"] - ghostRadius),
-            Mathf.Clamp(ghostObject.transform.position.y, testAreaBounds["minY"] + ghostRadius, testAreaBounds["maxY"] - ghostRadius),
-            Mathf.Clamp(ghostObject.transform.position.z, testAreaBounds["minZ"] + ghostRadius, testAreaBounds["maxZ"] - ghostRadius));
+        float ghostRadius = ghostSphere.GetComponent<SphereCollider>().radius * Mathf.Max(transform.lossyScale.x, transform.lossyScale.y, transform.lossyScale.z); ;
+        ghostSphere.transform.position = new Vector3(
+            Mathf.Clamp(ghostSphere.transform.position.x, testAreaBounds["minX"] + ghostRadius, testAreaBounds["maxX"] - ghostRadius),
+            Mathf.Clamp(ghostSphere.transform.position.y, testAreaBounds["minY"] + ghostRadius, testAreaBounds["maxY"] - ghostRadius),
+            Mathf.Clamp(ghostSphere.transform.position.z, testAreaBounds["minZ"] + ghostRadius, testAreaBounds["maxZ"] - ghostRadius));
 
     }
 
@@ -105,7 +127,7 @@ public class SelectableObject : MonoBehaviour
 
     public void DeSelected()
     {
-       endPos = ghostObject.transform.position;
+       endPos = ghostSphere.transform.position;
        startPos = transform.position;
 
        Debug.Log("Deselect");
@@ -113,7 +135,7 @@ public class SelectableObject : MonoBehaviour
 
     public void EditMovement()
     {
-        if (!hasMovement) ghostObject.transform.position = transform.position;
+        if (!hasMovement) ghostSphere.transform.position = transform.position;
 
         ShowGhostSphere(true);
 
@@ -135,12 +157,6 @@ public class SelectableObject : MonoBehaviour
         ShowGhostSphere(false);
     }
 
-    public void SaveMovement()
-    {
-        //GetComponent<Collider>().isTrigger = true;
-        //ghostObject.GetComponent<Collider>().isTrigger = true;
-    }
-
     public void DeleteObject()
     {
         Destroy(transform.parent.gameObject);
@@ -155,27 +171,77 @@ public class SelectableObject : MonoBehaviour
 
     public void ShowGhostSphere(bool enable)
     {
-        ghostObject.SetActive(enable);
-        GetComponent<LineRenderer>().enabled = enable;
+        ghostSphere.SetActive(enable);
+
+        lineRenderer.enabled = enable;
     }
 
     public void Preview()
     {
-        if (move)
+        if (previewActive)
         {
+            if (hasMovement)
+            {
+                lineRenderer.enabled = true;
+                ghostSphere.SetActive(true);
+            }
+
             transform.position = startPos;
-            GetComponent<Collider>().isTrigger = false;
-            ghostObject.GetComponent<Collider>().isTrigger = false;
+            sphereChild.GetComponent<Collider>().isTrigger = false;
+            ghostSphere.GetComponent<Collider>().isTrigger = false;
+            sphereChild.GetComponent<Renderer>().material.color = originalColor;
         } 
         else
         {
             startPos = transform.position;
-            endPos = ghostObject.transform.position;
-            GetComponent<Collider>().isTrigger = true;
-            ghostObject.GetComponent<Collider>().isTrigger = true;
+            endPos = ghostSphere.transform.position;
+            sphereChild.GetComponent<Collider>().isTrigger = true;
+            ghostSphere.GetComponent<Collider>().isTrigger = true;
+
+            lineRenderer.enabled = false;
+            ghostSphere.SetActive(false);
+
         }
 
         t = 0;
-        move = !move;
+        previewActive = !previewActive;
+    }
+
+    public void ChangeToFullSphere()
+    {
+        DeactivateChildren();
+
+        fullSphere.SetActive(true);
+
+        sphereChild = fullSphere;
+        objectType = "fullsphere";
+    }
+
+    public void ChangeToLeftHalf()
+    {
+        DeactivateChildren();
+
+        leftHalf.SetActive(true);
+
+        sphereChild = leftHalf;
+        objectType = "lefthalf";
+    }
+    public void ChangeToRightHalf()
+    {
+        DeactivateChildren();
+
+        rightHalf.SetActive(true);
+
+        sphereChild = rightHalf;
+        objectType = "righthalf";
+    }
+
+
+    private void DeactivateChildren()
+    {
+        foreach(Transform child in transform)
+        {
+            child.gameObject.SetActive(false);
+        }
     }
 }

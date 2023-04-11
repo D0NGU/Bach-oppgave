@@ -18,6 +18,8 @@ namespace Tobii.XR.Examples.GettingStarted
         private float timer = 0;
         public float limit = 1.5f;
 
+        private SelectableObject selectableObject;
+
         //The method of the "IGazeFocusable" interface, which will be called when this object receives or loses focus
         public void GazeFocusChanged(bool hasFocus)
         {
@@ -35,6 +37,7 @@ namespace Tobii.XR.Examples.GettingStarted
 
         private void Start()
         {
+            selectableObject = transform.parent.gameObject.GetComponent<SelectableObject>();
             _renderer = GetComponent<Renderer>();
             _originalColor = _renderer.material.color;
             _targetColor = _originalColor;
@@ -54,7 +57,7 @@ namespace Tobii.XR.Examples.GettingStarted
                     _renderer.material.color = Color.Lerp(_renderer.material.color, _targetColor, Time.deltaTime * (1 / animationTime));
                 }
 
-                if (_targetColor == highlightColor)
+                if (_targetColor == highlightColor && selectableObject.previewActive)
                 {
                     timer += Time.deltaTime;
                     if (timer > limit)
@@ -68,5 +71,6 @@ namespace Tobii.XR.Examples.GettingStarted
                 }
             }
         }
+
     }
 }

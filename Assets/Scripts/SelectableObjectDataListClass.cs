@@ -7,14 +7,12 @@ public class SelectableObjectDataListClass
 {
     public List<SelectableObjectDataClass> selectableObjectsDataList = new List<SelectableObjectDataClass>();
 
-  
 
    public MyEnumerator GetEnumerator()
    {  
       return new MyEnumerator(this);
 }
 
-// Declare the enumerator class:  
 public class MyEnumerator
 {
     int nIndex;
@@ -41,4 +39,6 @@ public class SelectableObjectDataClass
     public Vector3 endPosistion;
     public float time;
     public bool hasMovement;
+    public bool loopMovement;
+    public string objectType;
 }

@@ -9,12 +9,10 @@ public class ObjectMovementController : MonoBehaviour
     public ObjectSelection objectSelection;
 
     public GameObject editObjectCanvas;
-    public GameObject leftControllerCanvas;
     public GameObject editMovementCanvas;
 
     public TMP_Text timeText;
     public TMP_Text previewText;
-    public TMP_Text editMovementText;
 
     public Button removeMovementButton;
     public Button saveMovementButton;
@@ -44,7 +42,7 @@ public class ObjectMovementController : MonoBehaviour
         saveMovementButton.interactable = !saveMovementButton.interactable;
         loopMovementButton.interactable = !loopMovementButton.interactable;
 
-        if (objectSelection.selectedObject.GetComponent<SelectableObject>().move)
+        if (objectSelection.selectedObject.GetComponent<SelectableObject>().previewActive)
         {
             previewText.GetComponent<TextMeshProUGUI>().text = "Stop preview";
         }
@@ -80,7 +78,6 @@ public class ObjectMovementController : MonoBehaviour
 
     public void SaveMovement()
     {
-        objectSelection.selectedObject.GetComponent<SelectableObject>().SaveMovement();
         objectSelection.showEditCanvas();
     }
 
