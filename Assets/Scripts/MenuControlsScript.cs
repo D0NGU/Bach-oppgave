@@ -27,6 +27,11 @@ public class MenuControlsScript : MonoBehaviour
         SceneManager.LoadScene("EditTest");
     }
 
+    public void EnterRandomizedTest()
+    {
+        SceneManager.LoadScene("RandomizedTest");
+    }
+
     public void EnterCalibrator()
     {
         IntPtr test = IntPtr.Zero;

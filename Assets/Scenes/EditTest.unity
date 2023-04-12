@@ -19983,11 +19983,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectSelection: {fileID: 1829871599}
   editObjectCanvas: {fileID: 110219849}
-  leftControllerCanvas: {fileID: 1898487746}
   editMovementCanvas: {fileID: 1118499960}
   timeText: {fileID: 378961945}
   previewText: {fileID: 1708370286}
-  editMovementText: {fileID: 138846675}
   removeMovementButton: {fileID: 168304337}
   saveMovementButton: {fileID: 335419093}
   loopMovementButton: {fileID: 1966649504}
