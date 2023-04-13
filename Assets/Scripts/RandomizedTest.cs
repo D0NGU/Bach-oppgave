@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RandomizedTest : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class RandomizedTest : MonoBehaviour
 
     public GameObject spherePrefab;
     public GameObject testObjectParent;
+    public Slider sliderPercentageFullSpheres;
+    public Slider sliderPercentageLeftHalves;
+
     private bool showLeft = true;
     private bool showRight = true;
     private int percentageFullSpheres = 100;
@@ -111,20 +115,24 @@ public class RandomizedTest : MonoBehaviour
         showRight = true;
     }
 
-    public void SetFullSpherePercentage(string text)
+    public void SetFullSpherePercentage()
     {
+        /*
         if (int.TryParse(text, out int result))
         {
             percentageFullSpheres = result;
-        }
+        }*/
+        percentageFullSpheres = (int) sliderPercentageFullSpheres.value;
     }
 
-    public void SetLeftHalvesPercentage(string text)
+    public void SetLeftHalvesPercentage()
     {
+        /*
         if (int.TryParse(text, out int result))
         {
             percentageLeftHalves = result;
-        }
+        }*/
+        percentageLeftHalves = (int) sliderPercentageLeftHalves.value;
     }
 
     public void SetSpawnAmount(string text)

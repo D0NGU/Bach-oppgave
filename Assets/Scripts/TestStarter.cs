@@ -12,6 +12,7 @@ public class TestStarter : MonoBehaviour
     private bool testIsRunning = false;
     private List<Vector3> eyeGazeData = new();
     private StreamWriter sw;
+    private Plotting plotting;
 
     // The path of the file where the data was initially stored during runtime
     private string temporaryDataFilePath = Path.Combine(Environment.CurrentDirectory, "Assets/TestData/TemporaryDataFile/data.csv");
@@ -25,6 +26,11 @@ public class TestStarter : MonoBehaviour
     public TMP_InputField inputField;
     public GameObject overwriteSaveConfirmationView;
 
+
+    private void Awake()
+    {
+        plotting = GetComponent<Plotting>();
+    }
 
     private void Update()
     {
@@ -135,7 +141,9 @@ public class TestStarter : MonoBehaviour
             File.Delete(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + inputField.text + ".csv"));
         }
 
-        // Put data processing here
+        plotting.ReadAndPlot(temporaryDataFilePath);
+        plotting.CreateHeatmap(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + inputField.text + "_heatmap"));
+        plotting.CreateScatterPlot(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + inputField.text + "_scatterplot"));
 
         // Moves data from the temporary data file to a new file with user specified name
         File.Move(temporaryDataFilePath, newFilePath);
