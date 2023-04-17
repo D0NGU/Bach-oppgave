@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class ObjectMovementController : MonoBehaviour
+public class ObjectMenuController : MonoBehaviour
 {
     public ObjectSelection objectSelection;
 
@@ -12,6 +12,7 @@ public class ObjectMovementController : MonoBehaviour
     public GameObject editMovementCanvas;
 
     public TMP_Text timeText;
+    public TMP_Text visionDetectionTimeText;
     public TMP_Text previewText;
 
     public Button removeMovementButton;
@@ -23,7 +24,7 @@ public class ObjectMovementController : MonoBehaviour
     {
         objectSelection.selectedObject.GetComponent<SelectableObject>().EditMovement();
         showEditMovementCanvas();
-        UpdateTimeDisplay();
+        UpdateMovementTimeDisplay();
 
         if (objectSelection.selectedObject.GetComponent<SelectableObject>().loopMovement) loopMovementButton.GetComponent<Image>().color = new Color(0f / 255, 160f / 255, 255f / 255);
         else loopMovementButton.GetComponent<Image>().color = new Color(1f, 1f, 1f);
@@ -37,12 +38,12 @@ public class ObjectMovementController : MonoBehaviour
 
     public void Preview()
     {
-        objectSelection.selectedObject.GetComponent<SelectableObject>().Preview();
+        objectSelection.selectedObject.GetComponent<SelectableObject>().StartTest();
         removeMovementButton.interactable = !removeMovementButton.interactable;
         saveMovementButton.interactable = !saveMovementButton.interactable;
         loopMovementButton.interactable = !loopMovementButton.interactable;
 
-        if (objectSelection.selectedObject.GetComponent<SelectableObject>().previewActive)
+        if (objectSelection.selectedObject.GetComponent<SelectableObject>().testActive)
         {
             previewText.GetComponent<TextMeshProUGUI>().text = "Stop preview";
         }
@@ -53,22 +54,41 @@ public class ObjectMovementController : MonoBehaviour
     }
 
 
-    public void IncreaseTime()
+    public void IncreaseMovementTime()
     {
         objectSelection.selectedObject.GetComponent<SelectableObject>().speed += 0.5f;
-        UpdateTimeDisplay();
+        UpdateMovementTimeDisplay();
     }
 
-    public void DecreaseTime()
+    public void DecreaseMovementTime()
     {
         if (objectSelection.selectedObject.GetComponent<SelectableObject>().speed > 0.5f) objectSelection.selectedObject.GetComponent<SelectableObject>().speed -= 0.5f;
-        UpdateTimeDisplay();
+        UpdateMovementTimeDisplay();
     }
 
-    public void UpdateTimeDisplay()
+    public void UpdateMovementTimeDisplay()
     {
         timeText.GetComponent<TextMeshProUGUI>().text = objectSelection.selectedObject.GetComponent<SelectableObject>().speed.ToString() + "s";
     }
+
+
+    public void IncreaseVisionDetectionTime()
+    {
+        objectSelection.selectedObject.GetComponent<SelectableObject>().visionDetectionTime += 0.5f;
+        UpdateVisionDetectionTimeDisplay();
+    }
+
+    public void DecreaseVisionDetectionTime()
+    {
+        if (objectSelection.selectedObject.GetComponent<SelectableObject>().visionDetectionTime > 0.5f) objectSelection.selectedObject.GetComponent<SelectableObject>().visionDetectionTime -= 0.5f;
+        UpdateVisionDetectionTimeDisplay();
+    }
+
+    public void UpdateVisionDetectionTimeDisplay()
+    {
+        visionDetectionTimeText.GetComponent<TextMeshProUGUI>().text = objectSelection.selectedObject.GetComponent<SelectableObject>().visionDetectionTime.ToString() + "s";
+    }
+
 
     public void RemoveMovement()
     {
@@ -87,5 +107,4 @@ public class ObjectMovementController : MonoBehaviour
         if (objectSelection.selectedObject.GetComponent<SelectableObject>().loopMovement) loopMovementButton.GetComponent<Image>().color = new Color(0f / 255, 160f / 255, 255f / 255);
         else loopMovementButton.GetComponent<Image>().color = new Color(1f, 1f, 1f);
     }
-
 }

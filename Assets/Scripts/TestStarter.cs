@@ -110,7 +110,7 @@ public class TestStarter : MonoBehaviour
         foreach (Transform child in testObjectParent.transform)
         {
             SelectableObject so = child.Find("Sphere").GetComponent<SelectableObject>();
-            so.Preview();
+            so.StartTest();
         }
     }
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class RandomizedTest : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class RandomizedTest : MonoBehaviour
     public GameObject testObjectParent;
     public Slider sliderPercentageFullSpheres;
     public Slider sliderPercentageLeftHalves;
+    public TMP_Text startButtonText;
 
     private bool showLeft = true;
     private bool showRight = true;
@@ -35,8 +37,13 @@ public class RandomizedTest : MonoBehaviour
             coroutine = null;
             ClearTestArea();
 
+
+            startButtonText.GetComponent<TextMeshProUGUI>().text = "Start Test";
+
             return;
         }
+
+        startButtonText.GetComponent<TextMeshProUGUI>().text = "Stop Test";
 
         coroutine = StartCoroutine(RandomizedSpawn());
     }
@@ -80,6 +87,8 @@ public class RandomizedTest : MonoBehaviour
                 {
                     gameObject.transform.position = new Vector3(Random.Range(dict["minX"], dict["maxX"]), Random.Range(dict["minY"], dict["maxY"]), Random.Range(dict["minZ"], dict["maxZ"]));
                 }
+
+                gameObject.transform.Find("Sphere").gameObject.GetComponent<SelectableObject>().StartTest();
             }
 
             yield return new WaitForSeconds(spawnInterval);
@@ -94,7 +103,6 @@ public class RandomizedTest : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
-
 
 
     public void ShowLeftSide()
@@ -117,21 +125,11 @@ public class RandomizedTest : MonoBehaviour
 
     public void SetFullSpherePercentage()
     {
-        /*
-        if (int.TryParse(text, out int result))
-        {
-            percentageFullSpheres = result;
-        }*/
         percentageFullSpheres = (int) sliderPercentageFullSpheres.value;
     }
 
     public void SetLeftHalvesPercentage()
     {
-        /*
-        if (int.TryParse(text, out int result))
-        {
-            percentageLeftHalves = result;
-        }*/
         percentageLeftHalves = (int) sliderPercentageLeftHalves.value;
     }
 

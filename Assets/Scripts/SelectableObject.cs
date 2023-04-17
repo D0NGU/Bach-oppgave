@@ -24,12 +24,15 @@ public class SelectableObject : MonoBehaviour
     public Vector3 endPos;
     public float speed = 1;
     float t;
+    public float timePassedBeforeSeen;
+    public float visionDetectionTime = 1.5f;
 
-    public bool previewActive = false;
+    public bool testActive = false;
     private bool reverse = false;
     public bool loopMovement = false;
     public bool hasMovement = false;
     public bool verified = false;
+    public bool hasBeenSeen = false;
 
     private Dictionary<string, float> testAreaBounds;
 
@@ -64,18 +67,16 @@ public class SelectableObject : MonoBehaviour
         points[1] = ghostRb.position;
         if (lineRenderer != null) lineRenderer.SetPositions(points);
         
-        if (previewActive && hasMovement)
+        if (testActive && hasMovement)
         {
             if (Vector3.Distance(endPos, transform.position) < 0.01f && !reverse && loopMovement)
             {
-                Debug.Log("reverse");
                 reverse = true;
                 t = 0;
             }
             if (Vector3.Distance(transform.position, startPos) < 0.01f && reverse && loopMovement)
             {
                 reverse = false;
-                Debug.Log("unreverse");
                 t = 0;
             }
             if (!reverse)
@@ -92,6 +93,11 @@ public class SelectableObject : MonoBehaviour
                 //var step = speed * Time.deltaTime; // calculate distance to move
                 //transform.position = Vector3.MoveTowards(transform.position, startPos, step);
             }
+        }
+
+        if (!hasBeenSeen && testActive)
+        {
+            timePassedBeforeSeen += Time.deltaTime;
         }
 
         // Clamps position of gameObject to stay within the bounds of the testArea
@@ -119,10 +125,11 @@ public class SelectableObject : MonoBehaviour
 
             objectSelectionController.GetComponent<ObjectSelection>().ChangeSelectedObject(this.gameObject);
 
+            objectSelectionController.GetComponent<ObjectMenuController>().UpdateVisionDetectionTimeDisplay();
+
             this.gameObject.GetComponent<MeshRenderer>().material.EnableKeyword("_EMISSION");
         }
 
-        Debug.Log("Select");
     }
 
     public void DeSelected()
@@ -130,7 +137,6 @@ public class SelectableObject : MonoBehaviour
        endPos = ghostSphere.transform.position;
        startPos = transform.position;
 
-       Debug.Log("Deselect");
     }
 
     public void EditMovement()
@@ -176,9 +182,9 @@ public class SelectableObject : MonoBehaviour
         lineRenderer.enabled = enable;
     }
 
-    public void Preview()
+    public void StartTest()
     {
-        if (previewActive)
+        if (testActive)
         {
             if (hasMovement)
             {
@@ -190,6 +196,7 @@ public class SelectableObject : MonoBehaviour
             sphereChild.GetComponent<Collider>().isTrigger = false;
             ghostSphere.GetComponent<Collider>().isTrigger = false;
             sphereChild.GetComponent<Renderer>().material.color = originalColor;
+            hasBeenSeen = false;
         } 
         else
         {
@@ -198,13 +205,14 @@ public class SelectableObject : MonoBehaviour
             sphereChild.GetComponent<Collider>().isTrigger = true;
             ghostSphere.GetComponent<Collider>().isTrigger = true;
 
+            timePassedBeforeSeen = 0;
             lineRenderer.enabled = false;
             ghostSphere.SetActive(false);
 
         }
 
         t = 0;
-        previewActive = !previewActive;
+        testActive = !testActive;
     }
 
     public void ChangeToFullSphere()

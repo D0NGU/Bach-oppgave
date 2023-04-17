@@ -54,12 +54,10 @@ public class MoveSphere : MonoBehaviour
                 target.position = Vector3.MoveTowards(target.position, startPos.transform.position, step);
             }
             if(Vector3.Distance(target.position, transform.position) < 0.01f){
-                Debug.Log("reverse");
                 reverse = true;
             }
             if(Vector3.Distance(target.position, startPos.transform.position) < 0.01f){
                 reverse = false;
-                Debug.Log("unreverse");
             }
         } else if (isDragging){
             DragObject();

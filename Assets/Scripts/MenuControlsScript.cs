@@ -15,28 +15,6 @@ public class MenuControlsScript : MonoBehaviour
     List<GameObject> testButtonList = new();
     public GameObject scrollView;
     public GameObject scrollViewButtons;
-    
-    public void ExitApplication()
-    {
-        Debug.Log("Exiting application");
-        Application.Quit();
-    }
-
-    public void EnterEditor()
-    {
-        SceneManager.LoadScene("EditTest");
-    }
-
-    public void EnterRandomizedTest()
-    {
-        SceneManager.LoadScene("RandomizedTest");
-    }
-
-    public void EnterCalibrator()
-    {
-        IntPtr test = IntPtr.Zero;
-        SRanipal_Eye_API.LaunchEyeCalibration(test);
-    }
 
     public void FillScrollView()
     {
@@ -73,8 +51,9 @@ public class MenuControlsScript : MonoBehaviour
         
     }
 
-    public void GoToRunTest()
+    public void ToggleActive(GameObject gameObject)
     {
-        SceneManager.LoadScene("RunTest");
+        gameObject.SetActive(!gameObject.activeSelf);
     }
+
 }

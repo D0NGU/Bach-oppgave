@@ -16,7 +16,6 @@ namespace Tobii.XR.Examples.GettingStarted
         private Color _originalColor;
         private Color _targetColor;
         private float timer = 0;
-        public float limit = 1.5f;
 
         private SelectableObject selectableObject;
 
@@ -43,6 +42,7 @@ namespace Tobii.XR.Examples.GettingStarted
             _targetColor = _originalColor;
         }
 
+
         private void Update()
         {
             if(_renderer.material.color != Color.green)
@@ -57,12 +57,13 @@ namespace Tobii.XR.Examples.GettingStarted
                     _renderer.material.color = Color.Lerp(_renderer.material.color, _targetColor, Time.deltaTime * (1 / animationTime));
                 }
 
-                if (_targetColor == highlightColor && selectableObject.previewActive)
+                if (_targetColor == highlightColor && selectableObject.testActive)
                 {
                     timer += Time.deltaTime;
-                    if (timer > limit)
+                    if (timer > selectableObject.visionDetectionTime)
                     {
                         _renderer.material.color = Color.green;
+                        selectableObject.hasBeenSeen = true;
                     }
                 }
                 else
