@@ -165,7 +165,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   highlightColor: {r: 1, g: 0, b: 0, a: 1}
   animationTime: 0.1
-  limit: 1.5
 --- !u!54 &5938659737876212459
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -199,10 +198,12 @@ MonoBehaviour:
   startPos: {x: 0, y: 0, z: 0}
   endPos: {x: 0, y: 0, z: 0}
   speed: 1
-  previewActive: 0
+  timePassedBeforeSeen: 0
+  testActive: 0
   loopMovement: 0
   hasMovement: 0
   verified: 0
+  hasBeenSeen: 0
 --- !u!114 &5938659737876212460
 MonoBehaviour:
   m_ObjectHideFlags: 0

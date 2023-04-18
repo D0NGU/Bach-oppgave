@@ -13,10 +13,11 @@ public class SaveObjectsScript
         Debug.Log(dataJSONString);
 
         string filePath;
-        if (overwrite) filePath = TestNameStatic.currentTestFilePath;
+        if (overwrite) filePath = TestDataStatic.currentTestFilePath;
         else filePath = Application.dataPath + "/TestFiles/" + fileName.Replace(" ", "") + ".json";
 
-        TestNameStatic.currentTestFilePath = filePath;
+        TestDataStatic.currentTestFilePath = filePath;
+
 
         Debug.Log(filePath);
         System.IO.File.WriteAllText(filePath, dataJSONString);
@@ -25,9 +26,9 @@ public class SaveObjectsScript
     
     public void LoadFromJSON()
     {
-        if (System.IO.File.Exists(TestNameStatic.testFilePath))
+        if (System.IO.File.Exists(TestDataStatic.testFilePath))
         {
-            string dataJSONString = System.IO.File.ReadAllText(TestNameStatic.testFilePath);
+            string dataJSONString = System.IO.File.ReadAllText(TestDataStatic.testFilePath);
             selectableObjectData = JsonUtility.FromJson<SelectableObjectDataListClass>(dataJSONString);
             Debug.Log("Test loaded");
         }

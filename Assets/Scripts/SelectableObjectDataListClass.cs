@@ -5,6 +5,7 @@ using System.Collections.Generic;
 [System.Serializable]
 public class SelectableObjectDataListClass
 {
+    public float visionDetectionTime = TestDataStatic.visionDetectionTime;
     public List<SelectableObjectDataClass> selectableObjectsDataList = new List<SelectableObjectDataClass>();
 
 
@@ -37,6 +38,7 @@ public class SelectableObjectDataClass
 {
     public Vector3 startPosistion;
     public Vector3 endPosistion;
+    public Vector3 scale;
     public float time;
     public bool hasMovement;
     public bool loopMovement;

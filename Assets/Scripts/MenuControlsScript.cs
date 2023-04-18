@@ -46,7 +46,7 @@ public class MenuControlsScript : MonoBehaviour
 
     private void OnTestButtonClick(string path)
     {
-        TestNameStatic.testFilePath = path;
+        TestDataStatic.testFilePath = path;
         scrollViewButtons.SetActive(true);
         
     }

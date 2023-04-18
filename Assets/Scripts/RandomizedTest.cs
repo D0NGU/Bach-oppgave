@@ -25,6 +25,8 @@ public class RandomizedTest : MonoBehaviour
 
     private void Awake()
     {
+        TestDataStatic.visionDetectionTime = 1.5f;
+
         testArea = GameObject.Find("TestArea").GetComponent<TestArea>();
     }
 

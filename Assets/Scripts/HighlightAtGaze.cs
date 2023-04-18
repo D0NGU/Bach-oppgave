@@ -60,7 +60,7 @@ namespace Tobii.XR.Examples.GettingStarted
                 if (_targetColor == highlightColor && selectableObject.testActive)
                 {
                     timer += Time.deltaTime;
-                    if (timer > selectableObject.visionDetectionTime)
+                    if (timer > TestDataStatic.visionDetectionTime)
                     {
                         _renderer.material.color = Color.green;
                         selectableObject.hasBeenSeen = true;

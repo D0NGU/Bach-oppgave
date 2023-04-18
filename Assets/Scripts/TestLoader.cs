@@ -24,7 +24,9 @@ public class TestLoader : MonoBehaviour
         SaveObjectsScript loadedData = new();
         loadedData.LoadFromJSON();
 
-        TestNameStatic.currentTestFilePath = TestNameStatic.testFilePath;
+        TestDataStatic.currentTestFilePath = TestDataStatic.testFilePath;
+
+        TestDataStatic.visionDetectionTime = loadedData.selectableObjectData.visionDetectionTime;
 
         foreach (SelectableObjectDataClass dataClass in loadedData.selectableObjectData)
         {
@@ -38,6 +40,7 @@ public class TestLoader : MonoBehaviour
             // Sets public variables in script to correct values
             so.startPos = dataClass.startPosistion;
             so.endPos = dataClass.endPosistion;
+            so.scale = dataClass.scale;
             so.speed = dataClass.time;
             so.hasMovement = dataClass.hasMovement;
             so.loopMovement = dataClass.loopMovement;
@@ -46,6 +49,8 @@ public class TestLoader : MonoBehaviour
             if (so.objectType == "fullsphere") so.ChangeToFullSphere();
             else if (so.objectType == "righthalf") so.ChangeToRightHalf();
             else if (so.objectType == "lefthalf") so.ChangeToLeftHalf();
+
+            so.transform.localScale = so.scale;
 
             so.ShowGhostSphere(so.hasMovement);
         }

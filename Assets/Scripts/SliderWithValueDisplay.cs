@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class SliderWithValueDisplay : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class SliderWithValueDisplay : MonoBehaviour
 
         }
 
-        valueDisplayText.GetComponent<TextMeshProUGUI>().text = GetComponent<Slider>().value.ToString() + "%";
+        valueDisplayText.GetComponent<TextMeshProUGUI>().text = Math.Round(GetComponent<Slider>().value, 2).ToString();
 
         coroutine = StartCoroutine(Timer());
     }

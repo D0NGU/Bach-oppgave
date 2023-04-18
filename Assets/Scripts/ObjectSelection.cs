@@ -11,6 +11,7 @@ public class ObjectSelection : MonoBehaviour
     public GameObject editObjectCanvas;
     public GameObject leftControllerCanvas;
     public GameObject editMovementCanvas;
+    public Slider scaleSlider;
 
     public TMP_Text editMovementText;
 
@@ -19,6 +20,8 @@ public class ObjectSelection : MonoBehaviour
         leftControllerCanvas.SetActive(false);
         editMovementCanvas.SetActive(false);
         editObjectCanvas.SetActive(true);
+
+        scaleSlider.value = selectedObject.GetComponent<SelectableObject>().scale.x;
 
         if (selectedObject.GetComponent<SelectableObject>().hasMovement) editMovementText.GetComponent<TextMeshProUGUI>().text = "Edit movement";
         else editMovementText.GetComponent<TextMeshProUGUI>().text = "Add movement";

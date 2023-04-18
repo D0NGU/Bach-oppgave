@@ -15,9 +15,21 @@ public class ObjectMenuController : MonoBehaviour
     public TMP_Text visionDetectionTimeText;
     public TMP_Text previewText;
 
+
+    public GameObject spherePrefab;
     public Button removeMovementButton;
     public Button saveMovementButton;
     public Button loopMovementButton;
+    public GameObject testObjectParent;
+
+
+    private void Start()
+    {
+        TestDataStatic.visionDetectionTime = 1.5f;
+
+        UpdateVisionDetectionTimeDisplay();
+
+    }
 
 
     public void EditMovement()
@@ -74,19 +86,19 @@ public class ObjectMenuController : MonoBehaviour
 
     public void IncreaseVisionDetectionTime()
     {
-        objectSelection.selectedObject.GetComponent<SelectableObject>().visionDetectionTime += 0.5f;
+        TestDataStatic.visionDetectionTime += 0.5f;
         UpdateVisionDetectionTimeDisplay();
     }
 
     public void DecreaseVisionDetectionTime()
     {
-        if (objectSelection.selectedObject.GetComponent<SelectableObject>().visionDetectionTime > 0.5f) objectSelection.selectedObject.GetComponent<SelectableObject>().visionDetectionTime -= 0.5f;
+        if (TestDataStatic.visionDetectionTime > 0.5f) TestDataStatic.visionDetectionTime -= 0.5f;
         UpdateVisionDetectionTimeDisplay();
     }
 
     public void UpdateVisionDetectionTimeDisplay()
     {
-        visionDetectionTimeText.GetComponent<TextMeshProUGUI>().text = objectSelection.selectedObject.GetComponent<SelectableObject>().visionDetectionTime.ToString() + "s";
+        visionDetectionTimeText.GetComponent<TextMeshProUGUI>().text = TestDataStatic.visionDetectionTime + "s";
     }
 
 
@@ -106,5 +118,10 @@ public class ObjectMenuController : MonoBehaviour
         objectSelection.selectedObject.GetComponent<SelectableObject>().ToggleLoopMovement();
         if (objectSelection.selectedObject.GetComponent<SelectableObject>().loopMovement) loopMovementButton.GetComponent<Image>().color = new Color(0f / 255, 160f / 255, 255f / 255);
         else loopMovementButton.GetComponent<Image>().color = new Color(1f, 1f, 1f);
+    }
+
+    public void SetObjectScale(float scale)
+    {
+        objectSelection.selectedObject.GetComponent<SelectableObject>().SetScale(scale);
     }
 }

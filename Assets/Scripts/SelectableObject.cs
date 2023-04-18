@@ -25,7 +25,7 @@ public class SelectableObject : MonoBehaviour
     public float speed = 1;
     float t;
     public float timePassedBeforeSeen;
-    public float visionDetectionTime = 1.5f;
+    public Vector3 scale;
 
     public bool testActive = false;
     private bool reverse = false;
@@ -38,7 +38,7 @@ public class SelectableObject : MonoBehaviour
 
     void Awake()
     {
-        objectSelectionController = GameObject.Find("ObjectSelectionController");
+        objectSelectionController = GameObject.Find("SelectableObjectController");
 
         testAreaBounds = GameObject.Find("TestArea").GetComponent<TestArea>().GetTestAreaBounds();
 
@@ -48,9 +48,12 @@ public class SelectableObject : MonoBehaviour
 
         lineRenderer = GetComponent<LineRenderer>();
 
+        scale = transform.localScale;
+
         fullSphere = transform.Find("FullSphere").gameObject;
         rightHalf = transform.Find("RightHalf").gameObject;
         leftHalf = transform.Find("LeftHalf").gameObject;
+
 
         if (sphereChild != null)
         {
@@ -251,5 +254,11 @@ public class SelectableObject : MonoBehaviour
         {
             child.gameObject.SetActive(false);
         }
+    }
+
+    public void SetScale(float scale_)
+    {
+        transform.localScale = new Vector3(scale_, scale_, scale_);
+        scale = new Vector3(scale_, scale_, scale_);
     }
 }
