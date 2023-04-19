@@ -22,10 +22,14 @@ public class SelectableObject : MonoBehaviour
     public string objectType = "fullsphere";
     public Vector3 startPos;
     public Vector3 endPos;
-    public float speed = 1;
+    public Vector3 positionWhenSeen;
+    public float moveTime = 1;
     float t;
     public float timePassedBeforeSeen;
     public Vector3 scale;
+
+    private bool move = false;
+    private Coroutine coroutine;
 
     public bool testActive = false;
     private bool reverse = false;
@@ -33,6 +37,7 @@ public class SelectableObject : MonoBehaviour
     public bool hasMovement = false;
     public bool verified = false;
     public bool hasBeenSeen = false;
+    public float startDelay = 0.0f;
 
     private Dictionary<string, float> testAreaBounds;
 
@@ -70,34 +75,38 @@ public class SelectableObject : MonoBehaviour
         points[1] = ghostRb.position;
         if (lineRenderer != null) lineRenderer.SetPositions(points);
         
-        if (testActive && hasMovement)
+        // Object will move is the test is active, if it has movement, and if the initial start delay is over
+        if (testActive && hasMovement && move)
         {
             if (Vector3.Distance(endPos, transform.position) < 0.01f && !reverse && loopMovement)
             {
                 reverse = true;
                 t = 0;
             }
+
             if (Vector3.Distance(transform.position, startPos) < 0.01f && reverse && loopMovement)
             {
                 reverse = false;
                 t = 0;
             }
+
             if (!reverse)
             {
-                t += Time.deltaTime / speed;
+                t += Time.deltaTime / moveTime;
                 transform.position = Vector3.Lerp(startPos, endPos, t);
                 // var step = speed * Time.deltaTime; // calculate distance to move
                 // transform.position = Vector3.MoveTowards(transform.position, endPos, step);
             }
             else
             {
-                t += Time.deltaTime / speed;
+                t += Time.deltaTime / moveTime;
                 transform.position = Vector3.Lerp(endPos, startPos, t);
                 //var step = speed * Time.deltaTime; // calculate distance to move
                 //transform.position = Vector3.MoveTowards(transform.position, startPos, step);
             }
         }
 
+        // Counts number of seconds passed since start of test until the object has been seen
         if (!hasBeenSeen && testActive)
         {
             timePassedBeforeSeen += Time.deltaTime;
@@ -154,10 +163,6 @@ public class SelectableObject : MonoBehaviour
        //ghostObject.GetComponent<Collider>().isTrigger = false;
     }
 
-    public void SetSpeed(float speed)
-    {
-        this.speed = speed;
-    }
 
     public void RemoveMovement()
     {
@@ -199,7 +204,6 @@ public class SelectableObject : MonoBehaviour
             sphereChild.GetComponent<Collider>().isTrigger = false;
             ghostSphere.GetComponent<Collider>().isTrigger = false;
             sphereChild.GetComponent<Renderer>().material.color = originalColor;
-            hasBeenSeen = false;
         } 
         else
         {
@@ -209,13 +213,42 @@ public class SelectableObject : MonoBehaviour
             ghostSphere.GetComponent<Collider>().isTrigger = true;
 
             timePassedBeforeSeen = 0;
+            hasBeenSeen = false;
+
             lineRenderer.enabled = false;
             ghostSphere.SetActive(false);
 
         }
 
+
+        if (coroutine != null)
+        {
+            StopCoroutine(coroutine);
+            coroutine = null;
+
+            ShowChildren(true);
+        }
+        else
+        {
+            coroutine = StartCoroutine(DelayedStart());
+        }
+
+
+        move = false;
         t = 0;
         testActive = !testActive;
+    }
+
+    private IEnumerator DelayedStart()
+    {
+        ShowChildren(false);
+
+        yield return new WaitForSeconds(startDelay);
+
+        ShowChildren(true);
+
+        move = true;
+
     }
 
     public void ChangeToFullSphere()
@@ -253,6 +286,15 @@ public class SelectableObject : MonoBehaviour
         foreach(Transform child in transform)
         {
             child.gameObject.SetActive(false);
+        }
+    }
+
+    private void ShowChildren(bool enable)
+    {
+        foreach (Transform child in transform)
+        {
+            child.gameObject.GetComponent<MeshRenderer>().enabled = enable;
+            child.gameObject.GetComponent<MeshCollider>().enabled = enable;
         }
     }
 

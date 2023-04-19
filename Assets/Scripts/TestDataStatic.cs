@@ -11,4 +11,6 @@ public static class TestDataStatic
     public static string currentTestFilePath { get; set; }
 
     public static float visionDetectionTime { get; set; }
+
+    public static bool testIsRunning { get; set; }
 }

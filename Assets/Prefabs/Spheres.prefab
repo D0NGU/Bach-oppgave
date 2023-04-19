@@ -197,13 +197,15 @@ MonoBehaviour:
   objectType: fullsphere
   startPos: {x: 0, y: 0, z: 0}
   endPos: {x: 0, y: 0, z: 0}
-  speed: 1
+  moveTime: 1
   timePassedBeforeSeen: 0
+  scale: {x: 0, y: 0, z: 0}
   testActive: 0
   loopMovement: 0
   hasMovement: 0
   verified: 0
   hasBeenSeen: 0
+  startDelay: 0
 --- !u!114 &5938659737876212460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -797,6 +799,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5938659737876212373}
     m_Modifications:
+    - target: {fileID: 6973551208238312771, guid: 2c14f5ac512749f4f991de8dfb8aae92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8109904569746953772, guid: 2c14f5ac512749f4f991de8dfb8aae92, type: 3}
       propertyPath: m_RootOrder
       value: 0

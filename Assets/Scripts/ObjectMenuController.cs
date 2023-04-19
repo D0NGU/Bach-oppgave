@@ -6,21 +6,35 @@ using UnityEngine.UI;
 
 public class ObjectMenuController : MonoBehaviour
 {
-    public ObjectSelection objectSelection;
-
-    public GameObject editObjectCanvas;
-    public GameObject editMovementCanvas;
-
-    public TMP_Text timeText;
-    public TMP_Text visionDetectionTimeText;
-    public TMP_Text previewText;
+    [SerializeField]
+    private ObjectSelection objectSelection;
 
 
-    public GameObject spherePrefab;
-    public Button removeMovementButton;
-    public Button saveMovementButton;
-    public Button loopMovementButton;
-    public GameObject testObjectParent;
+    [SerializeField]
+    private GameObject editObjectCanvas;
+    [SerializeField]
+    private GameObject editMovementCanvas;
+
+    [SerializeField]
+    private TMP_Text timeText;
+    [SerializeField]
+    private TMP_Text startDelayText;
+    [SerializeField]
+    private TMP_Text visionDetectionTimeText;
+    [SerializeField]
+    private TMP_Text previewText;
+
+
+    [SerializeField]
+    private GameObject spherePrefab;
+    [SerializeField]
+    private Button removeMovementButton;
+    [SerializeField]
+    private Button saveMovementButton;
+    [SerializeField]
+    private Button loopMovementButton;
+    [SerializeField]
+    private GameObject testObjectParent;
 
 
     private void Start()
@@ -50,12 +64,13 @@ public class ObjectMenuController : MonoBehaviour
 
     public void Preview()
     {
+
         objectSelection.selectedObject.GetComponent<SelectableObject>().StartTest();
         removeMovementButton.interactable = !removeMovementButton.interactable;
         saveMovementButton.interactable = !saveMovementButton.interactable;
         loopMovementButton.interactable = !loopMovementButton.interactable;
 
-        if (objectSelection.selectedObject.GetComponent<SelectableObject>().testActive)
+        if (TestDataStatic.testIsRunning)
         {
             previewText.GetComponent<TextMeshProUGUI>().text = "Stop preview";
         }
@@ -68,19 +83,38 @@ public class ObjectMenuController : MonoBehaviour
 
     public void IncreaseMovementTime()
     {
-        objectSelection.selectedObject.GetComponent<SelectableObject>().speed += 0.5f;
+        objectSelection.selectedObject.GetComponent<SelectableObject>().moveTime += 0.5f;
         UpdateMovementTimeDisplay();
     }
 
     public void DecreaseMovementTime()
     {
-        if (objectSelection.selectedObject.GetComponent<SelectableObject>().speed > 0.5f) objectSelection.selectedObject.GetComponent<SelectableObject>().speed -= 0.5f;
+        if (objectSelection.selectedObject.GetComponent<SelectableObject>().moveTime > 0.5f) objectSelection.selectedObject.GetComponent<SelectableObject>().moveTime -= 0.5f;
         UpdateMovementTimeDisplay();
     }
 
     public void UpdateMovementTimeDisplay()
     {
-        timeText.GetComponent<TextMeshProUGUI>().text = objectSelection.selectedObject.GetComponent<SelectableObject>().speed.ToString() + "s";
+        timeText.GetComponent<TextMeshProUGUI>().text = objectSelection.selectedObject.GetComponent<SelectableObject>().moveTime.ToString() + "s";
+    }
+
+
+    public void IncreaseStartDelay()
+    {
+        objectSelection.selectedObject.GetComponent<SelectableObject>().startDelay += 0.5f;
+        UpdateStartDelayDisplay();
+    }
+
+    public void DecreaseStartDelay()
+    {
+        if (objectSelection.selectedObject.GetComponent<SelectableObject>().startDelay > 0.0f) objectSelection.selectedObject.GetComponent<SelectableObject>().startDelay -= 0.5f;
+        UpdateStartDelayDisplay();
+    }
+
+    public void UpdateStartDelayDisplay()
+    {
+        startDelayText.GetComponent<TextMeshProUGUI>().text = objectSelection.selectedObject.GetComponent<SelectableObject>().startDelay.ToString() + "s";
+        Debug.Log(objectSelection.selectedObject.GetComponent<SelectableObject>().startDelay);
     }
 
 

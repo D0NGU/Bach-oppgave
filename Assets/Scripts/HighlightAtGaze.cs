@@ -64,6 +64,7 @@ namespace Tobii.XR.Examples.GettingStarted
                     {
                         _renderer.material.color = Color.green;
                         selectableObject.hasBeenSeen = true;
+                        selectableObject.positionWhenSeen = transform.position;
                     }
                 }
                 else

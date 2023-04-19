@@ -6,9 +6,12 @@ using TMPro;
 public class TestSaver : MonoBehaviour
 {
 
-    public GameObject testObjectParent;
+    [SerializeField]
+    private GameObject testObjectParent;
+    [SerializeField]
+    private TMP_InputField inputField;
+
     public SaveObjectsScript saveToFile = new();
-    public TMP_InputField inputField;
 
     public void SaveTest(bool overwrite)
     {
@@ -19,7 +22,8 @@ public class TestSaver : MonoBehaviour
             dataClass.startPosistion = so.startPos;
             dataClass.endPosistion = so.endPos;
             dataClass.scale = so.scale;
-            dataClass.time = so.speed;
+            dataClass.moveTime = so.moveTime;
+            dataClass.startDelay = so.startDelay;
             dataClass.hasMovement = so.hasMovement;
             dataClass.loopMovement = so.loopMovement;
             dataClass.objectType = so.objectType;

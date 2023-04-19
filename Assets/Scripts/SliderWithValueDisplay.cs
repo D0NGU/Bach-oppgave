@@ -7,10 +7,13 @@ using System;
 
 public class SliderWithValueDisplay : MonoBehaviour
 {
-    public GameObject gameObjectToShow;
-    public TMP_Text valueDisplayText;
+    [SerializeField]
+    private GameObject gameObjectToShow;
+    [SerializeField]
+    private TMP_Text valueDisplayText;
 
-    [SerializeField] private float hideDelay = 2.0f;
+    [SerializeField] 
+    private float hideDelay = 2.0f;
     private Coroutine coroutine;
 
     public void ShowElement()

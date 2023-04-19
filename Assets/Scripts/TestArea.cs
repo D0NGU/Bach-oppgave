@@ -5,8 +5,10 @@ using UnityEngine;
 public class TestArea : MonoBehaviour
 {
 
-    public GameObject sphere;
-    public GameObject testObjectParent;
+    [SerializeField]
+    private GameObject spherePrefab;
+    [SerializeField]
+    private GameObject testObjectParent;
 
 
     public GameObject topRightBackCorner;
@@ -16,7 +18,7 @@ public class TestArea : MonoBehaviour
 
     public void Spawn()
     {
-        Instantiate(sphere, testObjectParent.transform);
+        Instantiate(spherePrefab, testObjectParent.transform);
     }
 
     

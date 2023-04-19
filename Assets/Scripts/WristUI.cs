@@ -6,8 +6,10 @@ using UnityEngine.InputSystem;
 
 public class WristUI : MonoBehaviour
 {
-    public InputActionAsset inputActions;
-    public GameObject xrOrigin;
+    [SerializeField]
+    private InputActionAsset inputActions;
+    [SerializeField]
+    private GameObject xrOrigin;
 
     private Canvas wristUI;
     private InputAction menuButton;

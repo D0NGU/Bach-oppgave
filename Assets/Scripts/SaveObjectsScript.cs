@@ -10,7 +10,6 @@ public class SaveObjectsScript
     public void SaveToJSON(string fileName, bool overwrite)
     {
         string dataJSONString = JsonUtility.ToJson(selectableObjectData);
-        Debug.Log(dataJSONString);
 
         string filePath;
         if (overwrite) filePath = TestDataStatic.currentTestFilePath;
@@ -18,8 +17,6 @@ public class SaveObjectsScript
 
         TestDataStatic.currentTestFilePath = filePath;
 
-
-        Debug.Log(filePath);
         System.IO.File.WriteAllText(filePath, dataJSONString);
         Debug.Log("Save file created");
     }

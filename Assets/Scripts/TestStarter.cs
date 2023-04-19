@@ -9,45 +9,26 @@ using System;
 public class TestStarter : MonoBehaviour
 {
     private Coroutine coroutine;
-    private bool testIsRunning = false;
-    private List<Vector3> eyeGazeData = new();
-    private StreamWriter sw;
-    private Plotting plotting;
-
-    // The path of the file where the data was initially stored during runtime
-    private string temporaryDataFilePath = Path.Combine(Environment.CurrentDirectory, "Assets/TestData/TemporaryDataFile/data.csv");
 
     public int time = 3;
-    public TMP_Text countdownText;
-    public TMP_Text startButtonText;
-    public GameObject testObjectParent;
-    public GameObject mainView;
-    public GameObject saveFileView;
-    public TMP_InputField inputField;
-    public GameObject overwriteSaveConfirmationView;
 
+    [SerializeField]
+    private TMP_Text countdownText;
+    [SerializeField]
+    private TMP_Text startButtonText;
+    [SerializeField]
+    private GameObject testObjectParent;
+    [SerializeField]
+    private GameObject mainView;
+    [SerializeField]
+    private GameObject saveFileView;
+    [SerializeField]
+    private TMP_InputField inputField;
+    [SerializeField]
+    private GameObject overwriteSaveConfirmationView;
+    [SerializeField]
+    private TestResultsSaver testResultsSaver;
 
-    private void Awake()
-    {
-        plotting = GetComponent<Plotting>();
-    }
-
-    private void Update()
-    {
-        if (testIsRunning)
-        {
-            var eyeTrackingData = TobiiXR.GetEyeTrackingData(TobiiXR_TrackingSpace.World);
-            if (eyeTrackingData.GazeRay.IsValid)
-            {
-                var rayOrigin = eyeTrackingData.GazeRay.Origin;
-                var rayDirection = eyeTrackingData.GazeRay.Direction;
-                RaycastHit hit;
-                Physics.Raycast(rayOrigin, rayDirection, out hit, Mathf.Infinity);
-                sw.WriteLine(hit.point.ToString());
-                eyeGazeData.Add(hit.point);
-            }
-        }
-    }
 
     public void StartCountdown()
     {
@@ -61,7 +42,7 @@ public class TestStarter : MonoBehaviour
             startButtonText.GetComponent<TextMeshProUGUI>().text = "Start Test";
         }
         // If the test is not running and the coroutine has not started yet
-        else if(!testIsRunning)
+        else if(!TestDataStatic.testIsRunning)
         {
             inputField.text = "";
             testObjectParent.SetActive(false);
@@ -71,8 +52,6 @@ public class TestStarter : MonoBehaviour
         // If the countdown coroutine is finished and the test in running/in progress
         else 
         {
-            sw.Close();
-
             StartTest();
             startButtonText.GetComponent<TextMeshProUGUI>().text = "Start Test";
 
@@ -97,15 +76,23 @@ public class TestStarter : MonoBehaviour
         countdownText.gameObject.SetActive(false);
         testObjectParent.SetActive(true);
 
-        sw = new StreamWriter(temporaryDataFilePath);
-        WriteAreaBoundsToCSV(sw);
         StartTest();
     }
 
     public void StartTest()
     {
-        eyeGazeData.Clear();
-        testIsRunning = !testIsRunning;
+
+        TestDataStatic.testIsRunning = !TestDataStatic.testIsRunning;
+
+        if (TestDataStatic.testIsRunning)
+        {
+            testResultsSaver.StartWritingGazeDotsData();
+        }
+        else
+        {
+            testResultsSaver.CloseStreamWriter();
+        }
+
         coroutine = null;
         foreach (Transform child in testObjectParent.transform)
         {
@@ -125,34 +112,9 @@ public class TestStarter : MonoBehaviour
         {
             mainView.SetActive(true);
             saveFileView.SetActive(false);
-            SaveGazeData();
+
+            testResultsSaver.SaveGazeData(inputField.text);
+            testResultsSaver.SaveTestResults(inputField.text);
         }
-    }
-
-    public void SaveGazeData()
-    {
-        Debug.Log("Data saved.");
-
-        // The path of the file to store the data specified by the user
-        string newFilePath = Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + inputField.text + ".csv");
-
-        if (File.Exists(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + inputField.text + ".csv")))
-        {
-            File.Delete(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + inputField.text + ".csv"));
-        }
-
-        plotting.ReadAndPlot(temporaryDataFilePath);
-        plotting.CreateHeatmap(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + inputField.text + "_heatmap"));
-        plotting.CreateScatterPlot(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + inputField.text + "_scatterplot"));
-
-        // Moves data from the temporary data file to a new file with user specified name
-        File.Move(temporaryDataFilePath, newFilePath);
-    }
-
-    public void WriteAreaBoundsToCSV(StreamWriter sw)
-    {
-        TestArea testArea = GameObject.Find("TestArea").GetComponent<TestArea>();
-        sw.WriteLine(testArea.bottomLeftBackCorner.transform.position.ToString());
-        sw.WriteLine(testArea.topRightBackCorner.transform.position.ToString());
     }
 }

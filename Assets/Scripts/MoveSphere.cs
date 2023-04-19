@@ -12,8 +12,9 @@ public class MoveSphere : MonoBehaviour
     public Button button;
     private Transform target;
     public GameObject endPos;
-    public  GameObject startPos;
-    [SerializeField] private Slider slider;
+    public GameObject startPos;
+    [SerializeField] 
+    private Slider slider;
     private float speed = 1;
 
     public bool editMode = false;

@@ -6,8 +6,10 @@ using UnityEngine.SceneManagement;
 public class TestLoader : MonoBehaviour
 {
 
-    public GameObject spheresPrefab;
-    public GameObject testObjectParent;
+    [SerializeField]
+    private GameObject spheresPrefab;
+    [SerializeField]
+    private GameObject testObjectParent;
 
     void Start()
     {
@@ -41,7 +43,8 @@ public class TestLoader : MonoBehaviour
             so.startPos = dataClass.startPosistion;
             so.endPos = dataClass.endPosistion;
             so.scale = dataClass.scale;
-            so.speed = dataClass.time;
+            so.moveTime = dataClass.moveTime;
+            so.startDelay = dataClass.startDelay;
             so.hasMovement = dataClass.hasMovement;
             so.loopMovement = dataClass.loopMovement;
             so.objectType = dataClass.objectType;

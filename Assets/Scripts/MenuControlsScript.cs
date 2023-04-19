@@ -10,11 +10,17 @@ using TMPro;
 
 public class MenuControlsScript : MonoBehaviour
 {
-    public GameObject buttonPrefab;
-    public Transform newParent;
-    List<GameObject> testButtonList = new();
-    public GameObject scrollView;
-    public GameObject scrollViewButtons;
+    [SerializeField]
+    private GameObject buttonPrefab;
+    [SerializeField]
+    private Transform newParent;
+    [SerializeField]
+    private GameObject scrollView;
+    [SerializeField]
+    private GameObject scrollViewButtons;
+
+    private List<GameObject> testButtonList = new();
+
 
     public void FillScrollView()
     {

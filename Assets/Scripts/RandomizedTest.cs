@@ -9,11 +9,16 @@ public class RandomizedTest : MonoBehaviour
     private TestArea testArea;
     private Coroutine coroutine;
 
-    public GameObject spherePrefab;
-    public GameObject testObjectParent;
-    public Slider sliderPercentageFullSpheres;
-    public Slider sliderPercentageLeftHalves;
-    public TMP_Text startButtonText;
+    [SerializeField]
+    private GameObject spherePrefab;
+    [SerializeField]
+    private GameObject testObjectParent;
+    [SerializeField]
+    private Slider sliderPercentageFullSpheres;
+    [SerializeField]
+    private Slider sliderPercentageLeftHalves;
+    [SerializeField]
+    private TMP_Text startButtonText;
 
     private bool showLeft = true;
     private bool showRight = true;
