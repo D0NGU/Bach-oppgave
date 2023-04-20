@@ -13,6 +13,9 @@ public class TestSaver : MonoBehaviour
 
     public SaveObjectsScript saveToFile = new();
 
+
+    public SaveObjectsScript saveRandomziedTestToFile = new();
+
     public void SaveTest(bool overwrite)
     {
         foreach (Transform child in testObjectParent.transform)
@@ -35,4 +38,5 @@ public class TestSaver : MonoBehaviour
         saveToFile.SaveToJSON(inputField.text, overwrite);
         saveToFile = new();
     }
+
 }

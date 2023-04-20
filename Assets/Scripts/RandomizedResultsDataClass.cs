@@ -1,11 +1,14 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 
 
 [System.Serializable]
-public class ResultsDataListClass
+public class RandomizedResultsDataClass
 {
     public float visionDetectionTime = TestDataStatic.visionDetectionTime;
+
+    public RandomizedTestParametersClass randomizedTestData = new();
+
     public List<SelectableObjectResultsDataClass> selectableObjectsResultsDataList = new List<SelectableObjectResultsDataClass>();
 
 
@@ -17,8 +20,8 @@ public class ResultsDataListClass
     public class MyEnumerator
     {
         int nIndex;
-        ResultsDataListClass collection;
-        public MyEnumerator(ResultsDataListClass coll)
+        RandomizedResultsDataClass collection;
+        public MyEnumerator(RandomizedResultsDataClass coll)
         {
             collection = coll;
             nIndex = -1;
@@ -41,17 +44,19 @@ public class ResultsDataListClass
 }
 
 [System.Serializable]
-public class SelectableObjectResultsDataClass
+public class RandomizedTestParametersClass
 {
-    public Vector3 startPosistion;
-    public Vector3 endPosistion;
-    public Vector3 positionWhenSeen;
-    public Vector3 scale;
-    public float moveTime;
-    public float startDelay;
-    public bool hasMovement;
-    public bool loopMovement;
-    public string objectType;
-    public bool hasBeenSeen;
-    public float timePassedBeforeSeen;
+    public int amount;
+    public int interval;
+    public int percentFullSpheres;
+    public int percentLeftSpheres;
+    public string displayedSide;
+
+}
+
+[System.Serializable]
+public class RandomizedResultsListClass
+{
+    public List<RandomizedResultsDataClass> list = new List<RandomizedResultsDataClass>();
+
 }

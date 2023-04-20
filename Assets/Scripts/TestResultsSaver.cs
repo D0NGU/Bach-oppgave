@@ -91,6 +91,8 @@ public class TestResultsSaver : MonoBehaviour
 
     public void SaveTestResults(string fileName)
     {
+        ResultsDataListClass resultsData = new();
+
         foreach (Transform child in testObjectParent.transform)
         {
             SelectableObjectResultsDataClass dataClass = new();
@@ -107,13 +109,16 @@ public class TestResultsSaver : MonoBehaviour
 
             dataClass.hasBeenSeen = so.hasBeenSeen;
             dataClass.timePassedBeforeSeen = so.timePassedBeforeSeen;
-            saveToFile.AddObjectDataToList(dataClass);
+
+            resultsData.AddObjectDataToList(dataClass);
         }
 
-        saveToFile.resultsData.visionDetectionTime = TestDataStatic.visionDetectionTime;
+        resultsData.visionDetectionTime = TestDataStatic.visionDetectionTime;
 
-        saveToFile.SaveToJSON(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + fileName + "_objects"));
+        saveToFile.SaveToJSON(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + fileName + "_objects"), resultsData);
         saveToFile = new();
+        
+        plotting.CreateTestObjectPlot(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + fileName + "_testObjectPlot"), Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + fileName + "_objects"));
     }
 
     public void StartWritingGazeDotsData()
@@ -123,5 +128,48 @@ public class TestResultsSaver : MonoBehaviour
 
         writeGazeData = true;
 
+    }
+
+
+    public void SaveRandomizedWave(RandomizedTestParametersClass randomizedTestData)
+    {
+        RandomizedResultsDataClass resultsData = new();
+
+        foreach (Transform child in testObjectParent.transform)
+        {
+            SelectableObjectResultsDataClass dataClass = new();
+            SelectableObject so = child.Find("Sphere").GetComponent<SelectableObject>();
+            dataClass.startPosistion = so.startPos;
+            dataClass.endPosistion = so.endPos;
+            dataClass.positionWhenSeen = so.positionWhenSeen;
+            dataClass.scale = so.scale;
+            dataClass.moveTime = so.moveTime;
+            dataClass.startDelay = so.startDelay;
+            dataClass.hasMovement = so.hasMovement;
+            dataClass.loopMovement = so.loopMovement;
+            dataClass.objectType = so.objectType;
+
+            dataClass.hasBeenSeen = so.hasBeenSeen;
+            dataClass.timePassedBeforeSeen = so.timePassedBeforeSeen;
+
+            resultsData.AddObjectDataToList(dataClass);
+        }
+
+        resultsData.randomizedTestData = randomizedTestData;
+
+        resultsData.visionDetectionTime = TestDataStatic.visionDetectionTime;
+
+        saveToFile.AddToRandomizedResultsList(resultsData);
+    }
+
+    public void SaveRandomizedTestResults(string fileName)
+    {
+        saveToFile.SaveRandomizedToJSON(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + fileName + "_objects"));
+        saveToFile = new();
+    }
+
+    public void ClearRandomizedData()
+    {
+        saveToFile.ClearRandomizedResultsList();
     }
 }

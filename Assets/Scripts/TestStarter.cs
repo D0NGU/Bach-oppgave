@@ -33,7 +33,7 @@ public class TestStarter : MonoBehaviour
     public void StartCountdown()
     {
         // If the coroutine is not null, meaning the countdown is in progress
-        if (coroutine != null)
+        if (coroutine != null && !TestDataStatic.testIsRunning)
         {
             StopCoroutine(coroutine);
             coroutine = null;
@@ -50,8 +50,9 @@ public class TestStarter : MonoBehaviour
             startButtonText.GetComponent<TextMeshProUGUI>().text = "Stop Test";
         }
         // If the countdown coroutine is finished and the test in running/in progress
-        else 
+        else
         {
+            coroutine = null;
             StartTest();
             startButtonText.GetComponent<TextMeshProUGUI>().text = "Start Test";
 
@@ -84,14 +85,8 @@ public class TestStarter : MonoBehaviour
 
         TestDataStatic.testIsRunning = !TestDataStatic.testIsRunning;
 
-        if (TestDataStatic.testIsRunning)
-        {
-            testResultsSaver.StartWritingGazeDotsData();
-        }
-        else
-        {
-            testResultsSaver.CloseStreamWriter();
-        }
+        if (TestDataStatic.testIsRunning) testResultsSaver.StartWritingGazeDotsData();
+        else testResultsSaver.CloseStreamWriter();
 
         coroutine = null;
         foreach (Transform child in testObjectParent.transform)
@@ -116,5 +111,11 @@ public class TestStarter : MonoBehaviour
             testResultsSaver.SaveGazeData(inputField.text);
             testResultsSaver.SaveTestResults(inputField.text);
         }
+    }
+
+    public void OverwriteFile()
+    {
+        testResultsSaver.SaveGazeData(inputField.text);
+        testResultsSaver.SaveTestResults(inputField.text);
     }
 }
