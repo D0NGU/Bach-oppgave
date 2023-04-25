@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4327022551714937036}
   - component: {fileID: 6790516737924651713}
   - component: {fileID: 892460921533871586}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GazeSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -98,7 +98,7 @@ public class TestStarter : MonoBehaviour
 
     public void CheckIfFileExists()
     {
-        if (File.Exists(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + inputField.text + ".csv")))
+        if (Directory.Exists(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + inputField.text)))
         {
             overwriteSaveConfirmationView.SetActive(true);
             saveFileView.SetActive(false);
@@ -107,6 +107,8 @@ public class TestStarter : MonoBehaviour
         {
             mainView.SetActive(true);
             saveFileView.SetActive(false);
+
+            Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + inputField.text));
 
             testResultsSaver.SaveGazeData(inputField.text);
             testResultsSaver.SaveTestResults(inputField.text);

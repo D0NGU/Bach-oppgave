@@ -52,16 +52,16 @@ public class TestResultsSaver : MonoBehaviour
         writeGazeData = false;
 
         // The path of the file to store the data specified by the user
-        string newFilePath = Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + fileName + ".csv");
+        string newFilePath = Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + fileName + "/" + fileName + "_gazePoints" + ".csv");
 
-        if (File.Exists(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + fileName + ".csv")))
+        if (File.Exists(newFilePath))
         {
-            File.Delete(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + fileName + ".csv"));
+            File.Delete(newFilePath);
         }
 
         plotting.ReadAndPlot(temporaryDataFilePath);
-        plotting.CreateHeatmap(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + fileName + "_heatmap"));
-        plotting.CreateScatterPlot(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + fileName + "_scatterplot"));
+        plotting.CreateHeatmap(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + fileName + "/" + fileName + "_heatmap"));
+        plotting.CreateScatterPlot(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + fileName + "/" + fileName + "_scatterplot"));
 
         // Moves data from the temporary data file to a new file with user specified name
         File.Move(temporaryDataFilePath, newFilePath);
@@ -114,11 +114,12 @@ public class TestResultsSaver : MonoBehaviour
         }
 
         resultsData.visionDetectionTime = TestDataStatic.visionDetectionTime;
+        resultsData.playerDistance = TestDataStatic.playerDistance;
 
-        saveToFile.SaveToJSON(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + fileName + "_objects"), resultsData);
+        saveToFile.SaveToJSON(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + fileName + "/" + fileName + "_objects"), resultsData);
         saveToFile = new();
         
-        plotting.CreateTestObjectPlot(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + fileName + "_testObjectPlot"), Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + fileName + "_objects"));
+        plotting.CreateTestObjectPlot(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + fileName + "/" + fileName + "_testObjectPlot"), Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + fileName + "/" + fileName + "_objects"));
     }
 
     public void StartWritingGazeDotsData()
@@ -158,13 +159,14 @@ public class TestResultsSaver : MonoBehaviour
         resultsData.randomizedTestData = randomizedTestData;
 
         resultsData.visionDetectionTime = TestDataStatic.visionDetectionTime;
+        resultsData.playerDistance = TestDataStatic.playerDistance;
 
         saveToFile.AddToRandomizedResultsList(resultsData);
     }
 
     public void SaveRandomizedTestResults(string fileName)
     {
-        saveToFile.SaveRandomizedToJSON(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + fileName + "_objects"));
+        saveToFile.SaveRandomizedToJSON(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + fileName + "/" + fileName + "_objects"));
         saveToFile = new();
     }
 

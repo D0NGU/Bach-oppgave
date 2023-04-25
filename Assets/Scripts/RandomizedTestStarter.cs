@@ -12,8 +12,6 @@ public class RandomizedTestStarter : MonoBehaviour
     private Coroutine testCoroutine;
     private Coroutine countdownCoroutine;
 
-    public int time = 3;
-
     [SerializeField]
     private GameObject spherePrefab;
     [SerializeField]
@@ -43,6 +41,9 @@ public class RandomizedTestStarter : MonoBehaviour
     private int percentageLeftHalves = 0;
     private string displayedSide = "both";
 
+    private RandomizedTestParametersClass randomizedTestData;
+
+    public int time = 3;
     public int spawnInterval = 10;
     public int spawnAmount = 1;
 
@@ -79,7 +80,7 @@ public class RandomizedTestStarter : MonoBehaviour
             countdownCoroutine = null;
 
             //Saves data when the test is stopped in order to not miss the current state
-            testResultsSaver.SaveRandomizedWave(GetRandomizedTestParameters());
+            testResultsSaver.SaveRandomizedWave(randomizedTestData);
 
             StartTest();
 
@@ -174,7 +175,7 @@ public class RandomizedTestStarter : MonoBehaviour
             }
 
             // Stores all relevant test parameters 
-            RandomizedTestParametersClass randomizedTestData = GetRandomizedTestParameters();
+            randomizedTestData = GetRandomizedTestParameters();
 
             yield return new WaitForSeconds(spawnInterval);
 
@@ -237,7 +238,7 @@ public class RandomizedTestStarter : MonoBehaviour
 
     public void CheckIfFileExists()
     {
-        if (File.Exists(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + inputField.text + ".csv")))
+        if (Directory.Exists(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + inputField.text)))
         {
             overwriteSaveConfirmationView.SetActive(true);
             saveFileView.SetActive(false);
@@ -246,6 +247,8 @@ public class RandomizedTestStarter : MonoBehaviour
         {
             mainView.SetActive(true);
             saveFileView.SetActive(false);
+
+            Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + inputField.text));
 
             testResultsSaver.SaveGazeData(inputField.text);
             testResultsSaver.SaveRandomizedTestResults(inputField.text);

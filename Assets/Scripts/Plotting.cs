@@ -206,7 +206,7 @@ public class Plotting : MonoBehaviour
     {
         using (var stream = File.Create(newFilePath + ".svg"))
         {
-            var exporter = new SvgExporter { Width = 800, Height = 700 };
+            var exporter = new SvgExporter { Width = 1920, Height = 1380 };
             exporter.Export(model, stream);
         }
     }

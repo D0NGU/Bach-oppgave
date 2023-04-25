@@ -13,4 +13,6 @@ public static class TestDataStatic
     public static float visionDetectionTime { get; set; }
 
     public static bool testIsRunning { get; set; }
+
+    public static float playerDistance { get; set; }
 }

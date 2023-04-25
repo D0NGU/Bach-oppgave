@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class ResultsDataListClass
 {
     public float visionDetectionTime = TestDataStatic.visionDetectionTime;
+    public float playerDistance = TestDataStatic.playerDistance;
     public List<SelectableObjectResultsDataClass> selectableObjectsResultsDataList = new List<SelectableObjectResultsDataClass>();
 
 
