@@ -70,7 +70,7 @@ public class ObjectMenuController : MonoBehaviour
         saveMovementButton.interactable = !saveMovementButton.interactable;
         loopMovementButton.interactable = !loopMovementButton.interactable;
 
-        if (TestDataStatic.testIsRunning)
+        if (objectSelection.selectedObject.GetComponent<SelectableObject>().testActive)
         {
             previewText.GetComponent<TextMeshProUGUI>().text = "Stop preview";
         }
@@ -150,6 +150,8 @@ public class ObjectMenuController : MonoBehaviour
     public void ToogleLoopMovement()
     {
         objectSelection.selectedObject.GetComponent<SelectableObject>().ToggleLoopMovement();
+
+        // Changes the color of the button when looped movement is enabled and disabled
         if (objectSelection.selectedObject.GetComponent<SelectableObject>().loopMovement) loopMovementButton.GetComponent<Image>().color = new Color(0f / 255, 160f / 255, 255f / 255);
         else loopMovementButton.GetComponent<Image>().color = new Color(1f, 1f, 1f);
     }

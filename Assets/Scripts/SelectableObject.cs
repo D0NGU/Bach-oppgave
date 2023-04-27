@@ -28,7 +28,7 @@ public class SelectableObject : MonoBehaviour
     public float timePassedBeforeSeen;
     public Vector3 scale;
 
-    private bool move = false;
+    public bool move = false;
     private Coroutine coroutine;
 
     public bool testActive = false;
@@ -293,8 +293,11 @@ public class SelectableObject : MonoBehaviour
     {
         foreach (Transform child in transform)
         {
-            child.gameObject.GetComponent<MeshRenderer>().enabled = enable;
-            child.gameObject.GetComponent<MeshCollider>().enabled = enable;
+            if (child.GetComponent<MeshRenderer>() != null && child.GetComponent<MeshCollider>() != null)
+            {
+                child.gameObject.GetComponent<MeshRenderer>().enabled = enable;
+                child.gameObject.GetComponent<MeshCollider>().enabled = enable;
+            }
         }
     }
 

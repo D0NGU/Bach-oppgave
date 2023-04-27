@@ -4,15 +4,23 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.XR;
+using UnityEngine.SpatialTracking;
 
 public class CameraSwitcher : MonoBehaviour
 {
+
+    [SerializeField]
+    private Camera displayCamera;
     [SerializeField]
     private Camera staticCamera;
     [SerializeField]
     private Camera trackedCamera;
     [SerializeField]
-    private TMP_Text textDisplay;
+    private TMP_Text changePlayerCameraText;
+    [SerializeField]
+    private TMP_Text toggleDisplayCameraText;
+    [SerializeField]
+    private TrackedPoseDriver tpd;
 
     public void ChangeCameraView()
     {
@@ -22,9 +30,9 @@ public class CameraSwitcher : MonoBehaviour
             staticCamera.depth = 0;
             trackedCamera.stereoTargetEye = StereoTargetEyeMask.None;
             trackedCamera.depth = -1;
+            
 
-
-            textDisplay.GetComponent<TextMeshProUGUI>().text = "Change to tracked cam";
+            changePlayerCameraText.GetComponent<TextMeshProUGUI>().text = "Change to tracked cam";
         }
         else
         {
@@ -33,8 +41,21 @@ public class CameraSwitcher : MonoBehaviour
             trackedCamera.stereoTargetEye = StereoTargetEyeMask.Both;
             trackedCamera.depth = 0;
 
+            changePlayerCameraText.GetComponent<TextMeshProUGUI>().text = "Change to static cam";
+        }
+    }
 
-            textDisplay.GetComponent<TextMeshProUGUI>().text = "Change to static cam";
+    
+    public void ToggleDisplayCamera()
+    {
+        displayCamera.gameObject.SetActive(!displayCamera.gameObject.activeSelf);
+        if (displayCamera.gameObject.activeSelf)
+        {
+            toggleDisplayCameraText.GetComponent<TextMeshProUGUI>().text = "Show player perspective";
+        }
+        else
+        {
+            toggleDisplayCameraText.GetComponent<TextMeshProUGUI>().text = "Return to default view";
         }
     }
 }

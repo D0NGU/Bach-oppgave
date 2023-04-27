@@ -1,21 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using Tobii.XR;
 
 public class GazeDots : MonoBehaviour
 {
-
-    public bool showGazeDots = false;
-
-    [SerializeField] private InputActionAsset ActionAsset;
+    [SerializeField] 
+    private InputActionAsset ActionAsset;
+    [SerializeField]
+    private Button button;
 
     public GameObject gazeSphere;
+    public bool showGazeDots = false;
 
     public void ToggleGazeDots()
     {
         showGazeDots = !showGazeDots;
+
+        // Changes the color of the button when gaze dots are enabled and disabled
+        if (showGazeDots) button.GetComponent<Image>().color = new Color(0f / 255, 160f / 255, 255f / 255);
+        else button.GetComponent<Image>().color = new Color(1f, 1f, 1f);
     }
 
 

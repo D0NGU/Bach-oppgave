@@ -162,16 +162,23 @@ public class TestResultsSaver : MonoBehaviour
         resultsData.playerDistance = TestDataStatic.playerDistance;
 
         saveToFile.AddToRandomizedResultsList(resultsData);
+
     }
 
     public void SaveRandomizedTestResults(string fileName)
     {
         saveToFile.SaveRandomizedToJSON(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + fileName + "/" + fileName + "_objects"));
         saveToFile = new();
+
     }
 
     public void ClearRandomizedData()
     {
         saveToFile.ClearRandomizedResultsList();
+    }
+
+    public void WriteWaveNumber(int waveNumber)
+    {
+        sw.WriteLine("Wavenumber " + waveNumber);
     }
 }

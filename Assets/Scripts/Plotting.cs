@@ -77,11 +77,14 @@ public class Plotting : MonoBehaviour
 
         for (int i = 2; i < lines.Length; i++)
         {
-            //normalizes the data so it fits the heatmap bin array, +1 if the data point falls into the bin
-            var values = lines[i].Replace("(", "").Replace(")", "").Replace("\n", "").Split(',');
-            double x = double.Parse(values[0]) * 10;
-            double y = double.Parse(values[1]) * 10;
-            heatmapData[(int)x + xOffset, (int)y + yOffset] += 1;
+            if (!lines[i].Contains("Wavenumber"))
+            {
+                //normalizes the data so it fits the heatmap bin array, +1 if the data point falls into the bin
+                var values = lines[i].Replace("(", "").Replace(")", "").Replace("\n", "").Split(',');
+                double x = double.Parse(values[0]) * 10;
+                double y = double.Parse(values[1]) * 10;
+                heatmapData[(int)x + xOffset, (int)y + yOffset] += 1;
+            }
         }
 
         // adds the heatmap bin array to the graph and sets the axis
@@ -108,8 +111,11 @@ public class Plotting : MonoBehaviour
         //Adds data points to the scatter graph
         for (int i = 2; i < lines.Length; i++)
         {
-            var values = lines[i].Replace("(", "").Replace(")", "").Replace("\n", "").Split(',');
-            scatterSeries.Points.Add(new ScatterPoint(double.Parse(values[0]), double.Parse(values[1]), 1, 1000));
+            if (!lines[i].Contains("Wavenumber"))
+            {
+                var values = lines[i].Replace("(", "").Replace(")", "").Replace("\n", "").Split(',');
+                scatterSeries.Points.Add(new ScatterPoint(double.Parse(values[0]), double.Parse(values[1]), 1, 1000));
+            }
         }
         model.Series.Add(scatterSeries);
         model.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Minimum = double.Parse(minCoords[0]), Maximum = double.Parse(maxCoords[0]), Key = "Horizontal" });

@@ -40,6 +40,7 @@ public class RandomizedTestStarter : MonoBehaviour
     private int percentageFullSpheres = 100;
     private int percentageLeftHalves = 0;
     private string displayedSide = "both";
+    private int waveNumber = 0;
 
     private RandomizedTestParametersClass randomizedTestData;
 
@@ -109,6 +110,8 @@ public class RandomizedTestStarter : MonoBehaviour
 
     public void StartTest()
     {
+        waveNumber = 0;
+
         TestDataStatic.testIsRunning = !TestDataStatic.testIsRunning;
 
         if (TestDataStatic.testIsRunning) testResultsSaver.StartWritingGazeDotsData();
@@ -139,6 +142,8 @@ public class RandomizedTestStarter : MonoBehaviour
             var dict = testArea.GetTestAreaBounds();
             int numberOfFullSpheres = (spawnAmount * percentageFullSpheres) / 100;
             int numberOfLeftHalves = ((spawnAmount - numberOfFullSpheres) * percentageLeftHalves) / 100;
+
+            testResultsSaver.WriteWaveNumber(waveNumber);
 
             for (int i = 0; i < spawnAmount; i++)
             {
@@ -180,6 +185,7 @@ public class RandomizedTestStarter : MonoBehaviour
             yield return new WaitForSeconds(spawnInterval);
 
             testResultsSaver.SaveRandomizedWave(randomizedTestData);
+            waveNumber++;
         }
     }
 

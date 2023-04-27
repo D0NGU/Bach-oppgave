@@ -45,7 +45,13 @@ public class ObjectSelection : MonoBehaviour
 
     public void ChangeSelectedObject(GameObject newSelectedObject)
     {
-        if (selectedObject != null) selectedObject.GetComponent<MeshRenderer>().material.DisableKeyword("_EMISSION");
+        if (selectedObject != null) {
+            selectedObject.GetComponent<MeshRenderer>().material.DisableKeyword("_EMISSION");
+            if (selectedObject.GetComponent<SelectableObject>().move)
+            {
+                objectMenuController.GetComponent<ObjectMenuController>().Preview();
+            }
+        }
 
         selectedObject = newSelectedObject;
 
