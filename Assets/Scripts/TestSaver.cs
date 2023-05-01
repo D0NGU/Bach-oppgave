@@ -11,11 +11,15 @@ public class TestSaver : MonoBehaviour
     [SerializeField]
     private TMP_InputField inputField;
 
-    public SaveObjectsScript saveToFile = new();
+    public SaveObjectsScript saveToFile;
 
+    public SaveObjectsScript saveRandomziedTestToFile;
 
-    public SaveObjectsScript saveRandomziedTestToFile = new();
-
+    private void Awake()
+    {
+        saveToFile = new();
+        saveRandomziedTestToFile = new();
+    }
     public void SaveTest(bool overwrite)
     {
         foreach (Transform child in testObjectParent.transform)

@@ -132,10 +132,10 @@ public class SelectableObject : MonoBehaviour
     public void Selected()
     {
         // Checks if this gameobject is already selected
-        if (!GameObject.ReferenceEquals(objectSelectionController.GetComponent<ObjectSelection>().selectedObject, this.gameObject))
+        if (!GameObject.ReferenceEquals(objectSelectionController.GetComponent<ObjectMenuController>().selectedObject, this.gameObject))
         {
 
-            objectSelectionController.GetComponent<ObjectSelection>().ChangeSelectedObject(this.gameObject);
+            objectSelectionController.GetComponent<ObjectMenuController>().ChangeSelectedObject(this.gameObject);
 
             objectSelectionController.GetComponent<ObjectMenuController>().UpdateVisionDetectionTimeDisplay();
 

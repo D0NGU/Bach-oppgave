@@ -10,7 +10,6 @@ public class TestArea : MonoBehaviour
     [SerializeField]
     private GameObject testObjectParent;
 
-
     public GameObject topRightBackCorner;
     public GameObject bottomRightFrontCorner;
     public GameObject bottomLeftBackCorner;
@@ -20,7 +19,6 @@ public class TestArea : MonoBehaviour
     {
         Instantiate(spherePrefab, testObjectParent.transform);
     }
-
     
     public Dictionary<string, float> GetTestAreaBounds()
     {

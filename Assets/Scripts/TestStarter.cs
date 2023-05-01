@@ -8,7 +8,7 @@ using System;
 
 public class TestStarter : MonoBehaviour
 {
-    private Coroutine coroutine;
+    private Coroutine countdownCoroutine;
 
     public int time = 3;
 
@@ -33,10 +33,10 @@ public class TestStarter : MonoBehaviour
     public void StartCountdown()
     {
         // If the coroutine is not null, meaning the countdown is in progress
-        if (coroutine != null && !TestDataStatic.testIsRunning)
+        if (countdownCoroutine != null && !TestDataStatic.testIsRunning)
         {
-            StopCoroutine(coroutine);
-            coroutine = null;
+            StopCoroutine(countdownCoroutine);
+            countdownCoroutine = null;
             countdownText.gameObject.SetActive(false);
             testObjectParent.SetActive(true);
             startButtonText.GetComponent<TextMeshProUGUI>().text = "Start Test";
@@ -46,13 +46,13 @@ public class TestStarter : MonoBehaviour
         {
             inputField.text = "";
             testObjectParent.SetActive(false);
-            coroutine = StartCoroutine(CountDown());
+            countdownCoroutine = StartCoroutine(CountDown());
             startButtonText.GetComponent<TextMeshProUGUI>().text = "Stop Test";
         }
         // If the countdown coroutine is finished and the test in running/in progress
         else
         {
-            coroutine = null;
+            countdownCoroutine = null;
             StartTest();
             startButtonText.GetComponent<TextMeshProUGUI>().text = "Start Test";
 
@@ -88,7 +88,7 @@ public class TestStarter : MonoBehaviour
         if (TestDataStatic.testIsRunning) testResultsSaver.StartWritingGazeDotsData();
         else testResultsSaver.CloseStreamWriter();
 
-        coroutine = null;
+        countdownCoroutine = null;
         foreach (Transform child in testObjectParent.transform)
         {
             SelectableObject so = child.Find("Sphere").GetComponent<SelectableObject>();
@@ -98,7 +98,7 @@ public class TestStarter : MonoBehaviour
 
     public void CheckIfFileExists()
     {
-        if (Directory.Exists(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + inputField.text)))
+        if (Directory.Exists(TestDataStatic.testResultFolder + inputField.text))
         {
             overwriteSaveConfirmationView.SetActive(true);
             saveFileView.SetActive(false);
@@ -108,7 +108,7 @@ public class TestStarter : MonoBehaviour
             mainView.SetActive(true);
             saveFileView.SetActive(false);
 
-            Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + inputField.text));
+            Directory.CreateDirectory(TestDataStatic.testResultFolder + inputField.text);
 
             testResultsSaver.SaveGazeData(inputField.text);
             testResultsSaver.SaveTestResults(inputField.text);

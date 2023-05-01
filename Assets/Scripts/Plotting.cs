@@ -90,10 +90,10 @@ public class Plotting : MonoBehaviour
         // adds the heatmap bin array to the graph and sets the axis
         var heatMapSeries = new HeatMapSeries
         {
-            X0 = (int)double.Parse(minCoords[0]),
-            X1 = (int)double.Parse(maxCoords[0]),
-            Y0 = (int)double.Parse(minCoords[1]),
-            Y1 = (int)double.Parse(maxCoords[1]),
+            X0 = double.Parse(minCoords[0]),
+            X1 = double.Parse(maxCoords[0]),
+            Y0 = double.Parse(minCoords[1]),
+            Y1 = double.Parse(maxCoords[1]),
             Interpolate = true,
             RenderMethod = HeatMapRenderMethod.Bitmap,
             Data = heatmapData
@@ -141,8 +141,8 @@ public class Plotting : MonoBehaviour
         model.Axes.Add(new LinearAxis()
         {
             Position = AxisPosition.Bottom,
-            Minimum = -4.5,
-            Maximum = 4.5,
+            Minimum = double.Parse(minCoords[0]),
+            Maximum = double.Parse(maxCoords[0]),
             Key = "Horizontal",
             Title = "\nLine = Movement to an object\n\n" +
                     "Green orb = Positions where a full object has been seen\n\n" +
@@ -152,7 +152,7 @@ public class Plotting : MonoBehaviour
                     "Dark orange = A left side object that has not been seen\n\n" +
                     "Red = A full object that has not been seen"
         });
-        model.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Minimum = -0.6, Maximum = 4, Key = "Vertical" });
+        model.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Minimum = double.Parse(minCoords[1]), Maximum = double.Parse(maxCoords[1]), Key = "Vertical" });
         scatterSeries.XAxisKey = "Horizontal";
         scatterSeries.YAxisKey = "Vertical";
         foreach (SelectableObjectResultsDataClass results in resultsList.selectableObjectsResultsDataList)

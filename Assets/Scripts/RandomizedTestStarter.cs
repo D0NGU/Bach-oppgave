@@ -244,7 +244,7 @@ public class RandomizedTestStarter : MonoBehaviour
 
     public void CheckIfFileExists()
     {
-        if (Directory.Exists(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + inputField.text)))
+        if (Directory.Exists(TestDataStatic.testResultFolder + inputField.text))
         {
             overwriteSaveConfirmationView.SetActive(true);
             saveFileView.SetActive(false);
@@ -254,7 +254,7 @@ public class RandomizedTestStarter : MonoBehaviour
             mainView.SetActive(true);
             saveFileView.SetActive(false);
 
-            Directory.CreateDirectory(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + inputField.text));
+            Directory.CreateDirectory(TestDataStatic.testResultFolder + inputField.text);
 
             testResultsSaver.SaveGazeData(inputField.text);
             testResultsSaver.SaveRandomizedTestResults(inputField.text);

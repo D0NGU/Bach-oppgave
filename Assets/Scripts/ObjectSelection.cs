@@ -49,7 +49,7 @@ public class ObjectSelection : MonoBehaviour
             selectedObject.GetComponent<MeshRenderer>().material.DisableKeyword("_EMISSION");
             if (selectedObject.GetComponent<SelectableObject>().move)
             {
-                objectMenuController.GetComponent<ObjectMenuController>().Preview();
+                objectMenuController.GetComponent<ObjectMenuController>().ToggleMovementPreview();
             }
         }
 

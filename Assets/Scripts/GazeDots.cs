@@ -12,6 +12,8 @@ public class GazeDots : MonoBehaviour
     [SerializeField]
     private Button button;
 
+    private GameObject sphere;
+
     public GameObject gazeSphere;
     public bool showGazeDots = false;
 
@@ -45,7 +47,7 @@ public class GazeDots : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(rayOrigin, rayDirection, out hit, Mathf.Infinity) && hit.collider.tag != "Controller")
             {
-                GameObject sphere = Instantiate(gazeSphere, hit.point, Quaternion.identity);
+                sphere = Instantiate(gazeSphere, hit.point, Quaternion.identity);
                 StartCoroutine(deleteAfter(sphere));
             }
         }

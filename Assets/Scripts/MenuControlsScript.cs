@@ -34,8 +34,7 @@ public class MenuControlsScript : MonoBehaviour
 
         if (scrollView.activeSelf)
         {
-            string path = Application.dataPath + "/TestFiles";
-            DirectoryInfo dir = new DirectoryInfo(path);
+            DirectoryInfo dir = new DirectoryInfo(TestDataStatic.testFolderPath);
             FileInfo[] info = dir.GetFiles("*.json");
 
             foreach (FileInfo f in info)
@@ -60,6 +59,12 @@ public class MenuControlsScript : MonoBehaviour
     public void ToggleActive(GameObject gameObject)
     {
         gameObject.SetActive(!gameObject.activeSelf);
+    }
+
+    public void OpenTestFolder()
+    {
+        string path = TestDataStatic.testFolderPath.Replace("/", "\\");
+        System.Diagnostics.Process.Start("explorer.exe", @path);
     }
 
 }

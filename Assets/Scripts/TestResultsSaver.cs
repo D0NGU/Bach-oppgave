@@ -10,10 +10,10 @@ public class TestResultsSaver : MonoBehaviour
     [SerializeField]
     private GameObject testObjectParent;
 
-    private SaveResultsScript saveToFile = new();
-
+    private SaveResultsScript saveToFile;
+    
     // The path of the file where the data was initially stored during runtime
-    private string temporaryDataFilePath = Path.Combine(Environment.CurrentDirectory, "Assets/TestData/TemporaryDataFile/data.csv");
+    private string temporaryDataFilePath;
 
     private List<Vector3> eyeGazeData = new();
     private StreamWriter sw;
@@ -23,6 +23,8 @@ public class TestResultsSaver : MonoBehaviour
     private void Awake()
     {
         plotting = GetComponent<Plotting>();
+        saveToFile = new();
+        temporaryDataFilePath = TestDataStatic.testResultFolder + ".TemporaryDataFile/data.csv";
 
         TestDataStatic.testIsRunning = false;
     }
@@ -52,7 +54,7 @@ public class TestResultsSaver : MonoBehaviour
         writeGazeData = false;
 
         // The path of the file to store the data specified by the user
-        string newFilePath = Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + fileName + "/" + fileName + "_gazePoints" + ".csv");
+        string newFilePath = TestDataStatic.testResultFolder + fileName + "/" + fileName + "_gazePoints" + ".csv";
 
         if (File.Exists(newFilePath))
         {
@@ -60,8 +62,8 @@ public class TestResultsSaver : MonoBehaviour
         }
 
         plotting.ReadAndPlot(temporaryDataFilePath);
-        plotting.CreateHeatmap(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + fileName + "/" + fileName + "_heatmap"));
-        plotting.CreateScatterPlot(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + fileName + "/" + fileName + "_scatterplot"));
+        plotting.CreateHeatmap(TestDataStatic.testResultFolder + fileName + "/" + fileName + "_heatmap");
+        plotting.CreateScatterPlot(TestDataStatic.testResultFolder + fileName + "/" + fileName + "_scatterplot");
 
         // Moves data from the temporary data file to a new file with user specified name
         File.Move(temporaryDataFilePath, newFilePath);
@@ -116,10 +118,10 @@ public class TestResultsSaver : MonoBehaviour
         resultsData.visionDetectionTime = TestDataStatic.visionDetectionTime;
         resultsData.playerDistance = TestDataStatic.playerDistance;
 
-        saveToFile.SaveToJSON(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + fileName + "/" + fileName + "_objects"), resultsData);
+        saveToFile.SaveToJSON(TestDataStatic.testResultFolder + fileName + "/" + fileName + "_objects", resultsData);
         saveToFile = new();
         
-        plotting.CreateTestObjectPlot(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + fileName + "/" + fileName + "_testObjectPlot"), Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + fileName + "/" + fileName + "_objects"));
+        plotting.CreateTestObjectPlot(TestDataStatic.testResultFolder + fileName + "/" + fileName + "_testObjectPlot", TestDataStatic.testResultFolder + fileName + "/" + fileName + "_objects");
     }
 
     public void StartWritingGazeDotsData()
@@ -167,7 +169,7 @@ public class TestResultsSaver : MonoBehaviour
 
     public void SaveRandomizedTestResults(string fileName)
     {
-        saveToFile.SaveRandomizedToJSON(Path.Combine(Environment.CurrentDirectory, "Assets/TestData/" + fileName + "/" + fileName + "_objects"));
+        saveToFile.SaveRandomizedToJSON(TestDataStatic.testResultFolder + fileName + "/" + fileName + "_objects");
         saveToFile = new();
 
     }
