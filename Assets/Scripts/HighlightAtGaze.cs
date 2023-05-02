@@ -37,6 +37,7 @@ namespace Tobii.XR.Examples.GettingStarted
         private void Start()
         {
             selectableObject = transform.parent.gameObject.GetComponent<SelectableObject>();
+
             _renderer = GetComponent<Renderer>();
             _originalColor = _renderer.material.color;
             _targetColor = _originalColor;
@@ -56,7 +57,7 @@ namespace Tobii.XR.Examples.GettingStarted
                 {
                     _renderer.material.color = Color.Lerp(_renderer.material.color, _targetColor, Time.deltaTime * (1 / animationTime));
                 }
-
+                // Tracks uninterrupted time passed spent looking on object 
                 if (_targetColor == highlightColor && selectableObject.testActive)
                 {
                     timer += Time.deltaTime;

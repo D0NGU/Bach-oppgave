@@ -8,20 +8,38 @@ using System.IO;
 using UnityEngine.UI;
 using TMPro;
 
-public class MenuControlsScript : MonoBehaviour
+/// <summary>
+/// Controls the scroll views used for loading tests
+/// </summary>
+public class ScrollViewController : MonoBehaviour
 {
     [SerializeField]
+    [Tooltip("Prefab of the button used to fill the scroll view")]
     private GameObject buttonPrefab;
     [SerializeField]
+    [Tooltip("Parent game object of the buttons in the scroll view")]
     private Transform newParent;
+    [Tooltip("Scrollview game object")]
     [SerializeField]
     private GameObject scrollView;
     [SerializeField]
+    [Tooltip("Parent game object of the scroll view control buttons")]
     private GameObject scrollViewButtons;
 
     private List<GameObject> testButtonList = new();
 
+    private void Update()
+    {
+        // Hides the scroll view buttons when the scroll view is inactive
+        if (!scrollView.activeSelf)
+        {
+            scrollViewButtons.SetActive(false);
+        }
+    }
 
+    /// <summary>
+    /// Fills the scroll view with a button for each of the saved tests
+    /// </summary>
     public void FillScrollView()
     {
         scrollView.SetActive(!scrollView.activeSelf);
@@ -29,7 +47,7 @@ public class MenuControlsScript : MonoBehaviour
         testButtonList.Clear();
         foreach (Transform child in newParent.transform)
         {
-            GameObject.Destroy(child.gameObject);
+            Destroy(child.gameObject);
         }
 
         if (scrollView.activeSelf)
@@ -49,22 +67,15 @@ public class MenuControlsScript : MonoBehaviour
        
     }
 
+    /// <summary>
+    /// Runs when clicking on a button in the scroll view
+    /// Sets the test file path and shows the scroll view buttons
+    /// </summary>
+    /// <param name="path">The path of the selected test file</param>
     private void OnTestButtonClick(string path)
     {
         TestDataStatic.testFilePath = path;
         scrollViewButtons.SetActive(true);
         
     }
-
-    public void ToggleActive(GameObject gameObject)
-    {
-        gameObject.SetActive(!gameObject.activeSelf);
-    }
-
-    public void OpenTestFolder()
-    {
-        string path = TestDataStatic.testFolderPath.Replace("/", "\\");
-        System.Diagnostics.Process.Start("explorer.exe", @path);
-    }
-
 }

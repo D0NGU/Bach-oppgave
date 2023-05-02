@@ -1,12 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-
+/// <summary>
+/// Class containing all result data of a test. 
+/// </summary>
 [System.Serializable]
 public class ResultsDataListClass
 {
+    /// <summary>
+    /// The time it takes to detect the players vision on an object
+    /// </summary>
     public float visionDetectionTime = TestDataStatic.visionDetectionTime;
+    /// <summary>
+    /// The players distance to the test area
+    /// </summary>
     public float playerDistance = TestDataStatic.playerDistance;
+
     public List<SelectableObjectResultsDataClass> selectableObjectsResultsDataList = new List<SelectableObjectResultsDataClass>();
 
 
@@ -41,6 +50,10 @@ public class ResultsDataListClass
 
 }
 
+/// <summary>
+/// Class containing all relevant data of a selectable object
+/// when saving test results.
+/// </summary>
 [System.Serializable]
 public class SelectableObjectResultsDataClass
 {

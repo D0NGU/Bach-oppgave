@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: c716310d399e62749997dc9e82ec7f7a, type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: f611408b2ebed2044a9001e5f7820fea, type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: d801c268d6cae3642a1651798729af05, type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -5584,11 +5584,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayCamera: {fileID: 370267099}
-  staticCamera: {fileID: 1267531793}
-  trackedCamera: {fileID: 9014170784473751093}
-  changePlayerCameraText: {fileID: 0}
   toggleDisplayCameraText: {fileID: 1947123186}
-  tpd: {fileID: 0}
 --- !u!114 &1126437901
 MonoBehaviour:
   m_ObjectHideFlags: 0

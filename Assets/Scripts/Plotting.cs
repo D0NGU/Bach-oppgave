@@ -2,11 +2,16 @@ using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
+
+/// <summary>
+/// Handles plottng from different result files.
+/// Plots included are heatmap of gaze dots, scatter plot of gaze dots
+/// and a plot of all objects, movement and where they have been seen
+/// </summary>
 public class Plotting : MonoBehaviour
 {
     /* Colors meaning:
@@ -39,13 +44,20 @@ public class Plotting : MonoBehaviour
     private string[] minCoords;
     private string[] maxCoords;
 
+    /// <summary>
+    /// Bin array used for heatmap plotting
+    /// </summary>
     private double[,] heatmapData;
 
+    /// <summary>
+    /// Every line of gaze point file
+    /// </summary>
     private string[] lines;
 
-    /*
-     * method that extracts the size of the graph
-     */
+    /// <summary>
+    /// Method that extracts the size of the testing area and uses it to limit the graph
+    /// </summary>
+    /// <param name="dataFilePath">Full path where the gaze dots file is located</param>
     public void ReadAndPlot(string dataFilePath)
     {
         //reads file
@@ -62,6 +74,10 @@ public class Plotting : MonoBehaviour
         heatmapData = new double[heatmapSizeX+1, heatmapSizeY+1];
     }
 
+    /// <summary>
+    /// Method that handles the gaze point data and plots it as a heatmap
+    /// </summary>
+    /// <param name="filePath">File path where the heatmap will be created + the name of the file at the end of the path</param>
     public void CreateHeatmap(string filePath)
     {
         var model = new PlotModel { Title = "Heatmap" };
@@ -71,7 +87,7 @@ public class Plotting : MonoBehaviour
             Palette = OxyPalettes.Rainbow(100)
         });
 
-
+        // calculates the offsets of x and y axis so the data points correspond with the bin array
         int xOffset = (int)Math.Abs(double.Parse(minCoords[0]) * 10);
         int yOffset = (int)Math.Abs(double.Parse(minCoords[1]) * 10);
 
@@ -103,6 +119,10 @@ public class Plotting : MonoBehaviour
         WriteToSVG(model, filePath);
     }
 
+    /// <summary>
+    /// Method that takes the gaze point data and plots them as a scatterplot
+    /// </summary>
+    /// <param name="filePath">File path where the scatter plot will be created + the name of the file at the end of the path</param>
     public void CreateScatterPlot(string filePath)
     {
         var model = new PlotModel { Title = "Scatterplot", PlotType = PlotType.XY };
@@ -123,9 +143,13 @@ public class Plotting : MonoBehaviour
         scatterSeries.XAxisKey = "Horizontal";
         scatterSeries.YAxisKey = "Vertical";
         WriteToSVG(model,filePath);
-        Debug.Log("Scatterplot created");
     }
 
+    /// <summary>
+    /// Method that creates the test object plot with movement lines and where the object was seen
+    /// </summary>
+    /// <param name="saveFilePath">File path where the plot will be created + the name of the file at the end of the path</param>
+    /// <param name="graphFilePath">File path where the save file of test object is located</param>
     public void CreateTestObjectPlot(string saveFilePath, string graphFilePath)
     {
         //loads data from json file
@@ -155,6 +179,7 @@ public class Plotting : MonoBehaviour
         model.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Minimum = double.Parse(minCoords[1]), Maximum = double.Parse(maxCoords[1]), Key = "Vertical" });
         scatterSeries.XAxisKey = "Horizontal";
         scatterSeries.YAxisKey = "Vertical";
+        //adds objects to the graph
         foreach (SelectableObjectResultsDataClass results in resultsList.selectableObjectsResultsDataList)
         {
             //if object of any type has movemnt
@@ -208,6 +233,11 @@ public class Plotting : MonoBehaviour
         WriteToSVG(model, saveFilePath);
     }
 
+    /// <summary>
+    /// Method that creates plot file and saves it at given location
+    /// </summary>
+    /// <param name="model">The plot to be saved</param>
+    /// <param name="newFilePath">Path where the plot will be created + the name of the plot</param>
     public void WriteToSVG(PlotModel model, string newFilePath)
     {
         using (var stream = File.Create(newFilePath + ".svg"))

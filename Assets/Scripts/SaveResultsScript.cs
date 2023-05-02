@@ -1,14 +1,19 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class responsible for saving test results for normal and randomized tests.
+/// </summary>
 public class SaveResultsScript
 {
 
     public RandomizedResultsListClass randomizedResultsList = new();
 
-
-
+    /// <summary>
+    /// Saves test results from a normal test to a json file
+    /// </summary>
+    /// <param name="filePath">Path of the file to save</param>
+    /// <param name="resultsData">The result data</param>
     public void SaveToJSON(string filePath, ResultsDataListClass resultsData)
     {
         string dataJSONString = JsonUtility.ToJson(resultsData);
@@ -17,6 +22,11 @@ public class SaveResultsScript
         Debug.Log("Save file created");
     }
 
+    /// <summary>
+    /// Loads test results from a normal test from a json file
+    /// </summary>
+    /// <param name="filePath">Path of the file to load</param>
+    /// <returns>Class containing all result data of a test</returns>
     public ResultsDataListClass LoadFromJSON(string filePath)
     {
         if (System.IO.File.Exists(filePath))
@@ -32,7 +42,10 @@ public class SaveResultsScript
     }
 
 
-
+    /// <summary>
+    /// Saves test results from a randomized test to a json file
+    /// </summary>
+    /// <param name="filePath">Path of the file to save</param>
     public void SaveRandomizedToJSON(string filePath)
     {
         string dataJSONString = JsonUtility.ToJson(randomizedResultsList);
@@ -41,6 +54,11 @@ public class SaveResultsScript
         Debug.Log("Save file created");
     }
 
+    /// <summary>
+    /// Loads test results from a randomized test from a json file
+    /// </summary>
+    /// <param name="filePath">Path of the file to load</param>
+    /// <returns>List of all waves/sets of a randomized test</returns>
     public List<RandomizedResultsDataClass> LoadRandomizedFromJSON(string filePath)
     {
         if (System.IO.File.Exists(filePath))

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using Tobii.XR;
 using System.IO;
@@ -17,9 +18,13 @@ public class TestStarter : MonoBehaviour
     [SerializeField]
     private TMP_Text startButtonText;
     [SerializeField]
+    private Button loadTestButton;
+    [SerializeField]
     private GameObject testObjectParent;
     [SerializeField]
     private GameObject mainView;
+    [SerializeField]
+    private GameObject scrollView;
     [SerializeField]
     private GameObject saveFileView;
     [SerializeField]
@@ -40,6 +45,7 @@ public class TestStarter : MonoBehaviour
             countdownText.gameObject.SetActive(false);
             testObjectParent.SetActive(true);
             startButtonText.GetComponent<TextMeshProUGUI>().text = "Start Test";
+            EnableTestLoading(true);
         }
         // If the test is not running and the coroutine has not started yet
         else if(!TestDataStatic.testIsRunning)
@@ -48,16 +54,18 @@ public class TestStarter : MonoBehaviour
             testObjectParent.SetActive(false);
             countdownCoroutine = StartCoroutine(CountDown());
             startButtonText.GetComponent<TextMeshProUGUI>().text = "Stop Test";
+            EnableTestLoading(false);
         }
         // If the countdown coroutine is finished and the test in running/in progress
         else
         {
             countdownCoroutine = null;
-            StartTest();
+            StartStopTest();
             startButtonText.GetComponent<TextMeshProUGUI>().text = "Start Test";
 
             saveFileView.SetActive(true);
             mainView.SetActive(false);
+            EnableTestLoading(true);
         }
     }
 
@@ -77,16 +85,25 @@ public class TestStarter : MonoBehaviour
         countdownText.gameObject.SetActive(false);
         testObjectParent.SetActive(true);
 
-        StartTest();
+        StartStopTest();
     }
 
-    public void StartTest()
+    public void StartStopTest()
     {
 
         TestDataStatic.testIsRunning = !TestDataStatic.testIsRunning;
 
-        if (TestDataStatic.testIsRunning) testResultsSaver.StartWritingGazeDotsData();
-        else testResultsSaver.CloseStreamWriter();
+        
+
+        if (TestDataStatic.testIsRunning)
+        {
+            testResultsSaver.StartWritingGazeDotsData();
+        }
+        else
+        {
+            testResultsSaver.CloseStreamWriter();
+            loadTestButton.interactable = true;
+        }
 
         countdownCoroutine = null;
         foreach (Transform child in testObjectParent.transform)
@@ -119,5 +136,11 @@ public class TestStarter : MonoBehaviour
     {
         testResultsSaver.SaveGazeData(inputField.text);
         testResultsSaver.SaveTestResults(inputField.text);
+    }
+
+    private void EnableTestLoading(bool enable)
+    {
+        loadTestButton.interactable = enable;
+        scrollView.SetActive(false);
     }
 }

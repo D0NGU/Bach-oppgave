@@ -3,21 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// Controls a UI Keyboard
+/// </summary>
 public class Keyboard : MonoBehaviour
 {
-    public GameObject keyboard;
-    public TMP_InputField inputField;
+    [SerializeField]
+    [Tooltip("The TMPro input field of the keyboard")]
+    private TMP_InputField inputField;
 
-    public void SetInputField()
-    {
-        Debug.Log("String: " + inputField.text);
-    }
-
+    /// <summary>
+    /// Inserts a character into the keyboards input field
+    /// </summary>
+    /// <param name="c">Character to instert</param>
     public void InsertChar(string c)
     {
         inputField.text += c;
     }
 
+    /// <summary>
+    /// Removes the last character in the input field
+    /// </summary>
     public void DeleteChar()
     {
         if (inputField.text.Length > 0)

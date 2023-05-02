@@ -1,11 +1,12 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.IO;
-using System;
 
+/// <summary>
+/// Responsible for starting and controlling a randomized test.
+/// </summary>
 public class RandomizedTestStarter : MonoBehaviour
 {
     private TestArea testArea;
@@ -13,40 +14,57 @@ public class RandomizedTestStarter : MonoBehaviour
     private Coroutine countdownCoroutine;
 
     [SerializeField]
+    [Tooltip("Prefab of selectable object")]
     private GameObject spherePrefab;
     [SerializeField]
+    [Tooltip("Parent object of all selectable objects in the editor test area")]
     private GameObject testObjectParent;
     [SerializeField]
+    [Tooltip("UI slider for changing the percentage of test object that are full spheres")]
     private Slider sliderPercentageFullSpheres;
     [SerializeField]
+    [Tooltip("UI slider for changing the percentage of test object that are left halves")]
     private Slider sliderPercentageLeftHalves;
     [SerializeField]
+    [Tooltip("TMPro text of the start button")]
     private TMP_Text startButtonText;
     [SerializeField]
+    [Tooltip("Game object containing the main UI options for the randomized test")]
     private GameObject mainView;
     [SerializeField]
+    [Tooltip("Game object containing the UI options for saving the test results")]
     private GameObject saveFileView;
     [SerializeField]
+    [Tooltip("TMPro input field for the test results folder name")]
     private TMP_InputField inputField;
     [SerializeField]
+    [Tooltip("Game object containing the confirmation view for overwriting an existing file")]
     private GameObject overwriteSaveConfirmationView;
     [SerializeField]
+    [Tooltip("TestResultSaver script")]
     private TestResultsSaver testResultsSaver;
     [SerializeField]
+    [Tooltip("TMPro text showing the test start countdown")]
     private TMP_Text countdownText;
 
     private bool showLeft = true;
     private bool showRight = true;
+
+    // Randomized test parameters
     private int percentageFullSpheres = 100;
     private int percentageLeftHalves = 0;
     private string displayedSide = "both";
+    private int time = 3;
+    private int spawnInterval = 10;
+    private int spawnAmount = 1;
+
     private int waveNumber = 0;
 
+    /// <summary>
+    /// Object used to store all the parameters of the randomized test.
+    /// </summary>
     private RandomizedTestParametersClass randomizedTestData;
 
-    public int time = 3;
-    public int spawnInterval = 10;
-    public int spawnAmount = 1;
 
     private void Awake()
     {
@@ -55,9 +73,12 @@ public class RandomizedTestStarter : MonoBehaviour
         testArea = GameObject.Find("TestArea").GetComponent<TestArea>();
     }
 
+    /// <summary>
+    /// Handles starting and stopping the randomized test
+    /// </summary>
     public void StartCountdown()
     {
-        // If the coroutine is not null, meaning the countdown is in progress
+        // If the coroutine is not null, meaning the countdown is in progress, the countdown is stopped
         if (countdownCoroutine != null && !TestDataStatic.testIsRunning)
         {
             StopCoroutine(countdownCoroutine);
@@ -66,7 +87,7 @@ public class RandomizedTestStarter : MonoBehaviour
 
             startButtonText.GetComponent<TextMeshProUGUI>().text = "Start Test";
         }
-        // If the test is not running and the coroutine has not started yet
+        // If the test is not running and the coroutine has not started yet, the countdown is started
         else if (!TestDataStatic.testIsRunning)
         {
             inputField.text = "";
@@ -75,7 +96,7 @@ public class RandomizedTestStarter : MonoBehaviour
 
             startButtonText.GetComponent<TextMeshProUGUI>().text = "Stop Test";
         }
-        // If the countdown coroutine is finished and the test in running/in progress
+        // If the countdown coroutine is finished and the test in running/in progress, the test is stopped
         else
         {
             countdownCoroutine = null;
@@ -89,12 +110,17 @@ public class RandomizedTestStarter : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Handles the countdown run before the randomized test starts.
+    /// Has to be run as a coroutine. 
+    /// </summary>
+    /// <returns>IEnumerator</returns>
     public IEnumerator CountDown()
     {
         int localTime = time;
-        countdownText.GetComponent<TextMeshProUGUI>().text = localTime.ToString();
-        countdownText.gameObject.SetActive(true);
 
+        countdownText.gameObject.SetActive(true);
+        countdownText.GetComponent<TextMeshProUGUI>().text = localTime.ToString();
         while (localTime > 0)
         {
             Debug.Log(localTime);
@@ -107,7 +133,9 @@ public class RandomizedTestStarter : MonoBehaviour
         StartTest();
     }
 
-
+    /// <summary>
+    /// Handles preparation for the randomized test and starts/stops the test coroutine.
+    /// </summary>
     public void StartTest()
     {
         waveNumber = 0;
@@ -117,6 +145,7 @@ public class RandomizedTestStarter : MonoBehaviour
         if (TestDataStatic.testIsRunning) testResultsSaver.StartWritingGazeDotsData();
         else testResultsSaver.CloseStreamWriter();
 
+        // if the test coroutine is not null, the coroutine is stopped
         if (testCoroutine != null)
         {
             StopCoroutine(testCoroutine);
@@ -132,6 +161,11 @@ public class RandomizedTestStarter : MonoBehaviour
         testCoroutine = StartCoroutine(RandomizedSpawn());
     }
 
+    /// <summary>
+    /// Instantiated a wave of randomly positioned selectable objects according to the test parameters.
+    /// Has to be manually stopped.
+    /// </summary>
+    /// <returns>IEnumerator</returns>
     private IEnumerator RandomizedSpawn()
     {
         while (true) 
@@ -145,6 +179,7 @@ public class RandomizedTestStarter : MonoBehaviour
 
             testResultsSaver.WriteWaveNumber(waveNumber);
 
+            // Instantiates a number of object equal to the spawnAmount
             for (int i = 0; i < spawnAmount; i++)
             {
                 GameObject gameObject = Instantiate(spherePrefab, testObjectParent.transform);
@@ -189,6 +224,9 @@ public class RandomizedTestStarter : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Deletes all object in the test area
+    /// </summary>
     private void ClearTestArea()
     {
         foreach (Transform child in testObjectParent.transform)
@@ -242,6 +280,10 @@ public class RandomizedTestStarter : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Checks if a folder with the chosen name already exists.
+    /// Shows option to overwrite if it does, saves the data if not. 
+    /// </summary>
     public void CheckIfFileExists()
     {
         if (Directory.Exists(TestDataStatic.testResultFolder + inputField.text))
@@ -267,6 +309,10 @@ public class RandomizedTestStarter : MonoBehaviour
         testResultsSaver.SaveRandomizedTestResults(inputField.text);
     }
 
+    /// <summary>
+    /// Retrieves all the parameters of the randomized test.
+    /// </summary>
+    /// <returns>Object containing all the parameters of the randomized test.</returns>
     public RandomizedTestParametersClass GetRandomizedTestParameters()
     {
         RandomizedTestParametersClass randomizedTestData = new();

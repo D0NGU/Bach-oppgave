@@ -1,11 +1,18 @@
-using UnityEngine;
 using System.Collections.Generic;
 
-
+/// <summary>
+/// Class containing all data of a wave/set of a randomized test. 
+/// </summary>
 [System.Serializable]
 public class RandomizedResultsDataClass
 {
+    /// <summary>
+    /// The time it takes to detect the players vision on an object
+    /// </summary>
     public float visionDetectionTime = TestDataStatic.visionDetectionTime;
+    /// <summary>
+    /// The players distance to the test area
+    /// </summary>
     public float playerDistance = TestDataStatic.playerDistance;
 
     public RandomizedTestParametersClass randomizedTestData = new();
@@ -44,6 +51,9 @@ public class RandomizedResultsDataClass
 
 }
 
+/// <summary>
+/// Class containing all the parameters of a randomized test.
+/// </summary>
 [System.Serializable]
 public class RandomizedTestParametersClass
 {
@@ -55,6 +65,9 @@ public class RandomizedTestParametersClass
 
 }
 
+/// <summary>
+/// Class containing list of randomized test waves/sets
+/// </summary>
 [System.Serializable]
 public class RandomizedResultsListClass
 {

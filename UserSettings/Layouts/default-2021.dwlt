@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 17
+  controlID: 98
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 23
+  controlID: 99
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -197,7 +197,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 92
+  controlID: 100
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -270,8 +270,8 @@ MonoBehaviour:
     y: 0
     width: 744.6666
     height: 1307.3334
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
@@ -677,9 +677,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -4.3156343, y: -14.847336, z: 41.019573}
+    m_Target: {x: -1.9251024, y: -10.8484, z: 29.04664}
     speed: 2
-    m_Value: {x: -4.3156343, y: -14.847336, z: 41.019573}
+    m_Value: {x: -1.9251024, y: -10.8484, z: 29.04664}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -726,20 +726,20 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.19694673, y: -0.050673522, z: 0.011627709, w: 0.97930324}
+    m_Target: {x: 0.1970974, y: -0.032860555, z: 0.008966601, w: 0.9800873}
     speed: 2
-    m_Value: {x: 0.19687732, y: -0.052128717, z: 0.011919983, w: 0.9789688}
+    m_Value: {x: 0.1970404, y: -0.03285105, z: 0.008964008, w: 0.9798038}
   m_Size:
-    m_Target: 24.978855
+    m_Target: 18.708288
     speed: 2
-    m_Value: 24.978855
+    m_Value: 18.708288
   m_Ortho:
     m_Target: 0
     speed: 2
     m_Value: 0
   m_CameraSettings:
-    m_Speed: 0.5672009
-    m_SpeedNormalized: 0.28000045
+    m_Speed: 2
+    m_SpeedNormalized: 1
     m_SpeedMin: 0.01
     m_SpeedMax: 2
     m_EasingEnabled: 1
@@ -788,20 +788,20 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 504b0100
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: eaedfdff54fcfdff58fcfdff7e6cfeff0c0dffffc40effff6c0fffff7a0fffffa40fffff4610ffff9e2bffff602effff163effff1047ffff1e47ffff4847ffffea47ffff1485ffff1685ffffe885ffff7a9affff7e9affff5a9fffff7af5ffffb4f7ffffc2f7ffffecf7ffff68f8ffff22fbffff78630000566500008e660000946700005e680000b66900000e6a000010730000147700009e7800002aeb00005eeb00000ced000014ee00004aef000040f00000d4f00000c8f10000dc02010090030100e8040100180501006e0a01008e0b01003c1a0100ee1b0100261d0100521e0100fa1f010052200100
+      m_ExpandedIDs: 08dcfcffa6ddfcffaee4fcff2ef0fcff40f0fcffc6f1fcff2202feff2657feff585cfeffd65dfeff765ffeff8464feffa46cfeffa66cfeffd471feff5676feff6e76feff4e7bfeff047cfeff2e7cfeffd07cfeffc8dafeff30dffeff66dffeff9ee2feff0ee4feff0ae6feffd0e6feff78e7feff84ebfeffd4ecfeffdceefeff46f4feff40f6feff84f8feff86fafeffd0fbfeff14fefeff8807ffff2208ffff5808fffff208ffff6a1affff3042ffff8a45ffff4a58ffff42d8ffffa4d8ffff20d9ffff32d9ffff34d9ffff6adaffff48e5ffff60e9ffff08eaffff16eaffff40eaffffe2eaffff14eeffff00f3ffff56faffff80faffff22fbffffbc5f0000a46f00002c7100005e710000a67600009e770000c6770000147d00004c7e000096800000b2e50000aaff000058020100422101003622010076670100547501004676010074760100a8760100ac760100ba760100c6aa0100e2b1010002b301008ec2010016c4010068c401006ec401007cc4010034c901002eca010056ca0100fece010086d00100acd001008ad90100bada01009eff0100bcff0100e6000200000a0200cc0a0200700b0200740b0200820b020062130200
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: Spheres(Clone)
-        m_OriginalName: Spheres(Clone)
+        m_Name: FileNameInput
+        m_OriginalName: FileNameInput
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: -132008
+        m_UserData: 133404
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
         m_OriginalEventType: 0
@@ -835,9 +835,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 1088
+    y: 947.3334
     width: 1083.6666
-    height: 271.00006
+    height: 411.6667
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -883,22 +883,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Packages/com.unity.xr.interaction.toolkit/Runtime/Locomotion/Continuous
+    - Assets/Scenes
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Packages/com.unity.xr.interaction.toolkit/Runtime/Locomotion/Continuous
+  - Assets/Scenes
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\bachelor-89-2023\bachelor-89
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 1544.3333}
-    m_SelectedIDs: 00ac0200
-    m_LastClickedID: 175104
-    m_ExpandedIDs: 00000000ea610000ec610000ee610000f0610000f2610000f4610000f6610000f8610000fa610000fc610000fe61000000620000026200000462000024620000d4620000983202009c3202009e320200b0320200d6360200343b0200423b020000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 266b0000
+    m_LastClickedID: 27430
+    m_ExpandedIDs: 00000000de6a0000e06a0000e26a0000e46a0000e66a0000e86a0000ea6a0000ec6a0000ee6a0000f06a0000f26a0000f46a0000f66a0000f86a0000fa6a0000fc6a0000fe6a0000006b0000026b0000046b0000066b0000d46b000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -926,7 +926,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000ea610000ec610000ee610000f0610000f2610000f4610000f6610000f8610000fa610000fc610000fe610000006200000262000004620000
+    m_ExpandedIDs: 00000000de6a0000e06a0000e26a0000e46a0000e66a0000e86a0000ea6a0000ec6a0000ee6a0000f06a0000f26a0000f46a0000f66a0000f86a0000fa6a0000fc6a0000fe6a0000006b0000026b0000046b0000066b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

@@ -1,10 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using ViveSR.anipal.Eye;
 using System;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Responsible for scene navigation
+/// </summary>
 public class SceneLoader : MonoBehaviour
 {
 
@@ -45,5 +46,22 @@ public class SceneLoader : MonoBehaviour
         SRanipal_Eye_API.LaunchEyeCalibration(test);
     }
 
+    /// <summary>
+    /// Toggle a Game Object to active or inactive.
+    /// </summary>
+    /// <param name="gameObject"></param>
+    public void ToggleActive(GameObject gameObject)
+    {
+        gameObject.SetActive(!gameObject.activeSelf);
+    }
+
+    /// <summary>
+    /// Opens a file explorer at the path where the test files are saved.
+    /// </summary>
+    public void OpenTestFolder()
+    {
+        string path = TestDataStatic.testFolderPath.Replace("/", "\\");
+        System.Diagnostics.Process.Start("explorer.exe", @path);
+    }
 
 }

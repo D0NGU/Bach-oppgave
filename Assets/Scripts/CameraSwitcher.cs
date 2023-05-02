@@ -1,51 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
-using UnityEngine.XR;
-using UnityEngine.SpatialTracking;
 
+/// <summary>
+/// Handles all changes of which camera is displayed where. 
+/// </summary>
 public class CameraSwitcher : MonoBehaviour
 {
 
     [SerializeField]
+    [Tooltip("The camera to toggle on and off.")]
     private Camera displayCamera;
     [SerializeField]
-    private Camera staticCamera;
-    [SerializeField]
-    private Camera trackedCamera;
-    [SerializeField]
-    private TMP_Text changePlayerCameraText;
-    [SerializeField]
+    [Tooltip("TMPro Text Element of the button used to toggle the display camera.")]
     private TMP_Text toggleDisplayCameraText;
-    [SerializeField]
-    private TrackedPoseDriver tpd;
 
-    public void ChangeCameraView()
-    {
-        if (staticCamera.stereoTargetEye == StereoTargetEyeMask.None)
-        {
-            staticCamera.stereoTargetEye = StereoTargetEyeMask.Both;
-            staticCamera.depth = 0;
-            trackedCamera.stereoTargetEye = StereoTargetEyeMask.None;
-            trackedCamera.depth = -1;
-            
 
-            changePlayerCameraText.GetComponent<TextMeshProUGUI>().text = "Change to tracked cam";
-        }
-        else
-        {
-            staticCamera.stereoTargetEye = StereoTargetEyeMask.None;
-            staticCamera.depth = -1;
-            trackedCamera.stereoTargetEye = StereoTargetEyeMask.Both;
-            trackedCamera.depth = 0;
-
-            changePlayerCameraText.GetComponent<TextMeshProUGUI>().text = "Change to static cam";
-        }
-    }
-
-    
+    /// <summary>
+    /// Toggles the display camera on and off. When on, the XR Camera is displayed on the main display. 
+    /// When off, a separate camera view is displayed. 
+    /// </summary>
     public void ToggleDisplayCamera()
     {
         displayCamera.gameObject.SetActive(!displayCamera.gameObject.activeSelf);

@@ -2,42 +2,79 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Responsible for holding and handling all parameters and properties of a
+/// selectable object.
+/// </summary>
 public class SelectableObject : MonoBehaviour
 {
+    /// <summary>
+    /// Game object with the <see cref="ObjectMenuController"/> in the scene
+    /// </summary>
     private GameObject objectSelectionController;
 
+    /// <summary>
+    /// The currently active child of the game object this script is attached to.
+    /// </summary>
     public GameObject sphereChild;
 
     private GameObject fullSphere;
     private GameObject rightHalf;
     private GameObject leftHalf;
 
-
+    /// <summary>
+    /// Game object that represent the end position of the selectable objects movement path
+    /// </summary>
     private GameObject ghostSphere;
+    /// <summary>
+    /// The rigid body of the selectable object
+    /// </summary>
     private Rigidbody rb;
+    /// <summary>
+    /// The rigid body of the ghost sphere
+    /// </summary>
     private Rigidbody ghostRb;
+    /// <summary>
+    /// Renders a line between the selectable object and the ghost sphere
+    /// </summary>
     private LineRenderer lineRenderer;
+    /// <summary>
+    /// The original color of the selectable object
+    /// </summary>
     private Color originalColor;
 
+    private Coroutine testCoroutine;
+
+    // All changable parameters of the seletable object
     public string objectType = "fullsphere";
     public Vector3 startPos;
     public Vector3 endPos;
     public Vector3 positionWhenSeen;
     public float moveTime = 1;
-    float t;
-    public float timePassedBeforeSeen;
     public Vector3 scale;
-
-    public bool move = false;
-    private Coroutine coroutine;
-
-    public bool testActive = false;
-    private bool reverse = false;
+    public float startDelay = 0.0f;
     public bool loopMovement = false;
     public bool hasMovement = false;
-    public bool verified = false;
+
     public bool hasBeenSeen = false;
-    public float startDelay = 0.0f;
+    public float timePassedBeforeSeen;
+
+    /// <summary>
+    /// Whether the selectable object should move
+    /// </summary>
+    public bool move = false;
+    /// <summary>
+    /// Whether the test has been started and is active
+    /// </summary>
+    public bool testActive = false;
+    /// <summary>
+    /// Whether the selectable object is moving in reverse
+    /// </summary>
+    private bool reverse = false;
+    /// <summary>
+    /// Keeps track of time spent in movement one way
+    /// </summary>
+    private float t;
 
     private Dictionary<string, float> testAreaBounds;
 
@@ -128,7 +165,9 @@ public class SelectableObject : MonoBehaviour
 
     }
 
-
+    /// <summary>
+    /// Handles selection of the selectable object
+    /// </summary>
     public void Selected()
     {
         // Checks if this gameobject is already selected
@@ -144,6 +183,10 @@ public class SelectableObject : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// If run when the selectable object is deselected.
+    /// Stores the start and end position.
+    /// </summary>
     public void DeSelected()
     {
        endPos = ghostSphere.transform.position;
@@ -151,16 +194,16 @@ public class SelectableObject : MonoBehaviour
 
     }
 
-    public void EditMovement()
+    /// <summary>
+    /// Adds movement to the selectable object
+    /// </summary>
+    public void AddMovement()
     {
         if (!hasMovement) ghostSphere.transform.position = transform.position;
 
         ShowGhostSphere(true);
 
         hasMovement = true;
-
-        //GetComponent<Collider>().isTrigger = false;
-       //ghostObject.GetComponent<Collider>().isTrigger = false;
     }
 
 
@@ -221,16 +264,16 @@ public class SelectableObject : MonoBehaviour
         }
 
 
-        if (coroutine != null)
+        if (testCoroutine != null)
         {
-            StopCoroutine(coroutine);
-            coroutine = null;
+            StopCoroutine(testCoroutine);
+            testCoroutine = null;
 
             ShowChildren(true);
         }
         else
         {
-            coroutine = StartCoroutine(DelayedStart());
+            testCoroutine = StartCoroutine(DelayedStart());
         }
 
 
