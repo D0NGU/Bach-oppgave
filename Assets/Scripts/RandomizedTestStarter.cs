@@ -104,7 +104,7 @@ public class RandomizedTestStarter : MonoBehaviour
             //Saves data when the test is stopped in order to not miss the current state
             testResultsSaver.SaveRandomizedWave(randomizedTestData);
 
-            StartTest();
+            StartStopTest();
 
             startButtonText.GetComponent<TextMeshProUGUI>().text = "Start Test";
         }
@@ -123,20 +123,19 @@ public class RandomizedTestStarter : MonoBehaviour
         countdownText.GetComponent<TextMeshProUGUI>().text = localTime.ToString();
         while (localTime > 0)
         {
-            Debug.Log(localTime);
             yield return new WaitForSeconds(1);
             localTime--;
             countdownText.GetComponent<TextMeshProUGUI>().text = localTime.ToString();
         }
         countdownText.gameObject.SetActive(false);
 
-        StartTest();
+        StartStopTest();
     }
 
     /// <summary>
     /// Handles preparation for the randomized test and starts/stops the test coroutine.
     /// </summary>
-    public void StartTest()
+    public void StartStopTest()
     {
         waveNumber = 0;
 
@@ -145,7 +144,7 @@ public class RandomizedTestStarter : MonoBehaviour
         if (TestDataStatic.testIsRunning) testResultsSaver.StartWritingGazeDotsData();
         else testResultsSaver.CloseStreamWriter();
 
-        // if the test coroutine is not null, the coroutine is stopped
+        // If the test coroutine is not null, the coroutine is stopped
         if (testCoroutine != null)
         {
             StopCoroutine(testCoroutine);
@@ -303,6 +302,9 @@ public class RandomizedTestStarter : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Saves the test result data
+    /// </summary>
     public void OverwriteFile()
     {
         testResultsSaver.SaveGazeData(inputField.text);

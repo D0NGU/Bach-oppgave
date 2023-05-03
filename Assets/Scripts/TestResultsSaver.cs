@@ -1,18 +1,23 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Tobii.XR;
 using System.IO;
-using System;
 
+/// <summary>
+/// Responsible for saving the test results of a normal and
+/// a randomized test.
+/// </summary>
 public class TestResultsSaver : MonoBehaviour
 {
     [SerializeField]
+    [Tooltip("The parent object of the selectable objects in the test area")]
     private GameObject testObjectParent;
 
     private SaveResultsScript saveToFile;
-    
-    // The path of the file where the data was initially stored during runtime
+
+    /// <summary>
+    /// The path of the file where the data was initially stored during runtime
+    /// </summary>
     private string temporaryDataFilePath;
 
     private List<Vector3> eyeGazeData = new();
@@ -47,6 +52,11 @@ public class TestResultsSaver : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Saves the gaze data of a test to CSV file.
+    /// Creates the relevant plots using the data.
+    /// </summary>
+    /// <param name="fileName">Name of the file to save the gaze data to</param>
     public void SaveGazeData(string fileName)
     {
         Debug.Log("Data saved.");
@@ -69,6 +79,10 @@ public class TestResultsSaver : MonoBehaviour
         File.Move(temporaryDataFilePath, newFilePath);
     }
 
+    /// <summary>
+    /// Writes the test area bounds (min and max x, y, z coordinates) 
+    /// to the gaze data file.
+    /// </summary>
     public void WriteAreaBoundsToCSV()
     {
         sw = new StreamWriter(temporaryDataFilePath);
@@ -78,6 +92,9 @@ public class TestResultsSaver : MonoBehaviour
         sw.WriteLine(testArea.topRightBackCorner.transform.position.ToString());
     }
 
+    /// <summary>
+    /// Stops writing of the gaze data and closes the StreamWriter
+    /// </summary>
     public void CloseStreamWriter()
     {
         writeGazeData = false;
@@ -85,12 +102,19 @@ public class TestResultsSaver : MonoBehaviour
         sw.Close();
     }
 
+    /// <summary>
+    /// Clears the list containing the gaze data points
+    /// </summary>
     public void ClearGazeData()
     {
         eyeGazeData.Clear();
     }
 
-
+    /// <summary>
+    /// Saves the selecable objects of the test to json file.
+    /// Creates a plot of these objects.
+    /// </summary>
+    /// <param name="fileName">Name of the file to save the test results to</param>
     public void SaveTestResults(string fileName)
     {
         ResultsDataListClass resultsData = new();
@@ -108,7 +132,6 @@ public class TestResultsSaver : MonoBehaviour
             dataClass.hasMovement = so.hasMovement;
             dataClass.loopMovement = so.loopMovement;
             dataClass.objectType = so.objectType;
-
             dataClass.hasBeenSeen = so.hasBeenSeen;
             dataClass.timePassedBeforeSeen = so.timePassedBeforeSeen;
 
@@ -124,6 +147,9 @@ public class TestResultsSaver : MonoBehaviour
         plotting.CreateTestObjectPlot(TestDataStatic.testResultFolder + fileName + "/" + fileName + "_testObjectPlot", TestDataStatic.testResultFolder + fileName + "/" + fileName + "_objects");
     }
 
+    /// <summary>
+    /// Starts the writing of gaze data to file
+    /// </summary>
     public void StartWritingGazeDotsData()
     {
         WriteAreaBoundsToCSV();
@@ -133,7 +159,10 @@ public class TestResultsSaver : MonoBehaviour
 
     }
 
-
+    /// <summary>
+    /// Saves the selecable objects of a wave/set of a randomized test to json file.
+    /// </summary>
+    /// <param name="randomizedTestData">Class containing the parameters for the wave/set</param>
     public void SaveRandomizedWave(RandomizedTestParametersClass randomizedTestData)
     {
         RandomizedResultsDataClass resultsData = new();
@@ -167,6 +196,10 @@ public class TestResultsSaver : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Saves all waves/sets of a randomized test to json file
+    /// </summary>
+    /// <param name="fileName">Name of the file to save the test results to</param>
     public void SaveRandomizedTestResults(string fileName)
     {
         saveToFile.SaveRandomizedToJSON(TestDataStatic.testResultFolder + fileName + "/" + fileName + "_objects");
@@ -174,11 +207,18 @@ public class TestResultsSaver : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Clears the list containing all the results data of the randomized waves/sets
+    /// </summary>
     public void ClearRandomizedData()
     {
         saveToFile.ClearRandomizedResultsList();
     }
 
+    /// <summary>
+    /// Writes the wave number of a randomized wave/set to the gaze data file
+    /// </summary>
+    /// <param name="waveNumber">Wave number</param>
     public void WriteWaveNumber(int waveNumber)
     {
         sw.WriteLine("Wavenumber " + waveNumber);

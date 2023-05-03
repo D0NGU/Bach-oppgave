@@ -224,7 +224,7 @@ public class ObjectMenuController : MonoBehaviour
     public void PreviewFullTest()
     {
         // If the selected object is currently in a movement preview, it is stopped first.
-        if (selectableObject.testActive && !TestDataStatic.testIsRunning)
+        if (selectableObject != null && selectableObject.testActive && !TestDataStatic.testIsRunning)
         {
             selectableObject.StartTest();
 
@@ -321,7 +321,6 @@ public class ObjectMenuController : MonoBehaviour
     public void UpdateStartDelayDisplay()
     {
         startDelayText.GetComponent<TextMeshProUGUI>().text = selectableObject.startDelay.ToString() + "s";
-        Debug.Log(selectableObject.startDelay);
     }
 
 

@@ -45,7 +45,6 @@ GameObject:
   - component: {fileID: 5938659737876212372}
   - component: {fileID: 5938659737876212375}
   - component: {fileID: 5938659737876212374}
-  - component: {fileID: 5938659737876212457}
   - component: {fileID: 5938659737876212456}
   - component: {fileID: 5938659737876212459}
   - component: {fileID: 4820826854454726752}
@@ -139,18 +138,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5938659737876212457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5938659737876212455}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e34040cb11b58745a7a3381362ea1d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5938659737876212456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,15 +186,14 @@ MonoBehaviour:
   endPos: {x: 0, y: 0, z: 0}
   positionWhenSeen: {x: 0, y: 0, z: 0}
   moveTime: 1
-  timePassedBeforeSeen: 0
   scale: {x: 0, y: 0, z: 0}
-  move: 0
-  testActive: 0
+  startDelay: 0
   loopMovement: 0
   hasMovement: 0
-  verified: 0
   hasBeenSeen: 0
-  startDelay: 0
+  timePassedBeforeSeen: 0
+  move: 0
+  testActive: 0
 --- !u!114 &5938659737876212460
 MonoBehaviour:
   m_ObjectHideFlags: 0

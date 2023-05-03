@@ -1,11 +1,17 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-
+/// <summary>
+/// Class containing all selectable object of a created test
+/// </summary>
 [System.Serializable]
 public class SelectableObjectDataListClass
-{
+{ 
+    /// <summary>
+    /// The time it takes to detect the players vision on an object
+    /// </summary>
     public float visionDetectionTime = TestDataStatic.visionDetectionTime;
+
     public List<SelectableObjectDataClass> selectableObjectsDataList = new List<SelectableObjectDataClass>();
 
 
@@ -33,6 +39,11 @@ public class SelectableObjectDataListClass
         public SelectableObjectDataClass Current => collection.selectableObjectsDataList[nIndex];
     }  
 }
+
+/// <summary>
+/// Class containing all relevant data of a selectable object
+/// when saving a test.
+/// </summary>
 [System.Serializable]
 public class SelectableObjectDataClass
 {

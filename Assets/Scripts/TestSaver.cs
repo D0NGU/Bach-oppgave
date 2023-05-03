@@ -1,25 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// Responsible for saving a created test
+/// </summary>
 public class TestSaver : MonoBehaviour
 {
 
     [SerializeField]
+    [Tooltip("The parent object of the selectable objects in the test area")]
     private GameObject testObjectParent;
     [SerializeField]
+    [Tooltip("TMPRo input field that holds the name of the test")]
     private TMP_InputField inputField;
 
     public SaveObjectsScript saveToFile;
 
-    public SaveObjectsScript saveRandomziedTestToFile;
-
     private void Awake()
     {
         saveToFile = new();
-        saveRandomziedTestToFile = new();
     }
+
+    /// <summary>
+    /// Saves a created test to a json file
+    /// </summary>
+    /// <param name="overwrite">Whether to overwrite and existing file</param>
     public void SaveTest(bool overwrite)
     {
         foreach (Transform child in testObjectParent.transform)
@@ -34,6 +39,7 @@ public class TestSaver : MonoBehaviour
             dataClass.hasMovement = so.hasMovement;
             dataClass.loopMovement = so.loopMovement;
             dataClass.objectType = so.objectType;
+
             saveToFile.AddObjectDataToList(dataClass);
         }
 

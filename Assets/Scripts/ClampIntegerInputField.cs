@@ -3,10 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+/// <summary>
+/// Responsible for clamping the value of a TMPro input field
+/// </summary>
 public class ClampIntegerInputField : MonoBehaviour
 {
-    [SerializeField] private int min = 0;
-    [SerializeField] private int max = 100;
+    [SerializeField] 
+    [Tooltip("Minimum value of the input field")]
+    private int min = 0;
+    [SerializeField]
+    [Tooltip("Maximum value of the input field")]
+    private int max = 100;
+
     private int numberToClamp;
     private int result;
 

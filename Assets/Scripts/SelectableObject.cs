@@ -15,6 +15,7 @@ public class SelectableObject : MonoBehaviour
 
     /// <summary>
     /// The currently active child of the game object this script is attached to.
+    /// The physical game object that is interacted with in the scene.
     /// </summary>
     public GameObject sphereChild;
 
@@ -184,7 +185,7 @@ public class SelectableObject : MonoBehaviour
     }
 
     /// <summary>
-    /// If run when the selectable object is deselected.
+    /// Is run when the selectable object is deselected.
     /// Stores the start and end position.
     /// </summary>
     public void DeSelected()
@@ -206,7 +207,9 @@ public class SelectableObject : MonoBehaviour
         hasMovement = true;
     }
 
-
+    /// <summary>
+    /// Removes movement from the selectable object
+    /// </summary>
     public void RemoveMovement()
     {
         hasMovement = false;
@@ -214,11 +217,20 @@ public class SelectableObject : MonoBehaviour
         ShowGhostSphere(false);
     }
 
+    /// <summary>
+    /// deletes the selectable object.
+    /// Destroys the parent of this game object,
+    /// which contains both the selectable object and
+    /// the connected ghost sphere.
+    /// </summary>
     public void DeleteObject()
     {
         Destroy(transform.parent.gameObject);
     }
 
+    /// <summary>
+    /// Toggles looping movement on or off
+    /// </summary>
     public void ToggleLoopMovement()
     {
         if (loopMovement) reverse = false;
@@ -226,6 +238,10 @@ public class SelectableObject : MonoBehaviour
         loopMovement = !loopMovement;
     }
 
+    /// <summary>
+    /// Whether to enable/show the ghost sphere
+    /// </summary>
+    /// <param name="enable">true or false</param>
     public void ShowGhostSphere(bool enable)
     {
         ghostSphere.SetActive(enable);
@@ -233,8 +249,12 @@ public class SelectableObject : MonoBehaviour
         lineRenderer.enabled = enable;
     }
 
+    /// <summary>
+    /// Starts/stops the test/movement of the selectable object.
+    /// </summary>
     public void StartTest()
     {
+        /// Hides the ghost sphere when the test is started. 
         if (testActive)
         {
             if (hasMovement)
@@ -263,7 +283,7 @@ public class SelectableObject : MonoBehaviour
 
         }
 
-
+        // Stops the test coroutine if it is already running, starts it otherwise
         if (testCoroutine != null)
         {
             StopCoroutine(testCoroutine);
@@ -282,6 +302,11 @@ public class SelectableObject : MonoBehaviour
         testActive = !testActive;
     }
 
+    /// <summary>
+    /// Delays the movement of  the selectable object by the start delay
+    /// Has to be run through a coroutine.
+    /// </summary>
+    /// <returns>IEnumerator</returns>
     private IEnumerator DelayedStart()
     {
         ShowChildren(false);
@@ -294,6 +319,10 @@ public class SelectableObject : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Changes the sphere type of the selectable object
+    /// to a full sphere
+    /// </summary>
     public void ChangeToFullSphere()
     {
         DeactivateChildren();
@@ -304,6 +333,10 @@ public class SelectableObject : MonoBehaviour
         objectType = "fullsphere";
     }
 
+    /// <summary>
+    /// Changes the sphere type of the selectable object
+    /// to a left half
+    /// </summary>
     public void ChangeToLeftHalf()
     {
         DeactivateChildren();
@@ -313,6 +346,11 @@ public class SelectableObject : MonoBehaviour
         sphereChild = leftHalf;
         objectType = "lefthalf";
     }
+
+    /// <summary>
+    /// Changes the sphere type of the selectable object
+    /// to a right half
+    /// </summary>
     public void ChangeToRightHalf()
     {
         DeactivateChildren();
@@ -323,7 +361,9 @@ public class SelectableObject : MonoBehaviour
         objectType = "righthalf";
     }
 
-
+    /// <summary>
+    /// Deactivates all children of this game object.
+    /// </summary>
     private void DeactivateChildren()
     {
         foreach(Transform child in transform)
@@ -332,6 +372,9 @@ public class SelectableObject : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Shows/hides the children of this game object. (Requires the child to be activated)
+    /// </summary>
     private void ShowChildren(bool enable)
     {
         foreach (Transform child in transform)
@@ -344,6 +387,10 @@ public class SelectableObject : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sets the scale of the selectable object to a given value
+    /// </summary>
+    /// <param name="scale_">New scale value</param>
     public void SetScale(float scale_)
     {
         transform.localScale = new Vector3(scale_, scale_, scale_);

@@ -1,14 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Controls the main UI wrist menu with general options
+/// </summary>
 public class WristUI : MonoBehaviour
 {
     [SerializeField]
+    [Tooltip("Input Action Asset")]
     private InputActionAsset inputActions;
     [SerializeField]
+    [Tooltip("The XR Origin of the player")]
     private GameObject xrOrigin;
 
     private Canvas wristUI;
