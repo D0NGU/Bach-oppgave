@@ -14,12 +14,17 @@ public static class TestDataStatic
     /// <summary>
     /// The file path of the folder where the tests are saved
     /// </summary>
-    public static string testFolderPath { get; } = Application.dataPath + "/TestFiles/";
+    public static string testFolderPath { get; } = Application.persistentDataPath + "/TestFiles/";
 
     /// <summary>
     /// The file path of the folder where the test resutls are saved
     /// </summary>
-    public static string testResultFolder { get; } = Application.dataPath + "/TestData/";
+    public static string testResultFolder { get; } = Application.persistentDataPath + "/TestData/";
+
+    /// <summary>
+    /// The file path of the folder where the gaze data is temporarily stored
+    /// </summary>
+    public static string temporaryDataFolderPath { get; } = testResultFolder + ".TemporaryDataFile/";
 
     /// <summary>
     /// The file path of the test that is currently open in the scene

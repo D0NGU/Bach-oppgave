@@ -182,7 +182,7 @@ public class ObjectMenuController : MonoBehaviour
         showEditMovementCanvas();
         UpdateMovementTimeDisplay();
 
-        if (selectableObject.loopMovement) loopMovementButton.GetComponent<Image>().color = new Color(0f / 255, 160f / 255, 255f / 255);
+        if (selectableObject.loopMovement) loopMovementButton.GetComponent<Image>().color = new Color(48f / 255, 174 / 255f, 253f / 255);
         else loopMovementButton.GetComponent<Image>().color = new Color(1f, 1f, 1f);
     }
 
@@ -279,7 +279,7 @@ public class ObjectMenuController : MonoBehaviour
         selectableObject.ToggleLoopMovement();
 
         // Changes the color of the button when looped movement is enabled and disabled
-        if (selectableObject.loopMovement) loopMovementButton.GetComponent<Image>().color = new Color(0f / 255, 160f / 255, 255f / 255);
+        if (selectableObject.loopMovement) loopMovementButton.GetComponent<Image>().color = new Color(48f / 255, 174 / 255f, 253f / 255);
         else loopMovementButton.GetComponent<Image>().color = new Color(1f, 1f, 1f);
     }
 

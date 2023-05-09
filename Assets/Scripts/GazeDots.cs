@@ -33,7 +33,7 @@ public class GazeDots : MonoBehaviour
         showGazeDots = !showGazeDots;
 
         // Changes the color of the button when gaze dots are enabled and disabled
-        if (showGazeDots) button.GetComponent<Image>().color = new Color(0f / 255, 160f / 255, 255f / 255);
+        if (showGazeDots) button.GetComponent<Image>().color = new Color(48f / 255, 174 / 255f, 253f / 255);
         else button.GetComponent<Image>().color = new Color(1f, 1f, 1f);
     }
 

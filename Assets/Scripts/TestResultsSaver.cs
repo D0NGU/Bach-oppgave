@@ -28,8 +28,22 @@ public class TestResultsSaver : MonoBehaviour
     private void Awake()
     {
         plotting = GetComponent<Plotting>();
+
+        // Creates folders for test results if it does not exist
+        if (!Directory.Exists(TestDataStatic.testResultFolder))
+        {
+            Directory.CreateDirectory(TestDataStatic.testResultFolder);
+        }
+
         saveToFile = new();
-        temporaryDataFilePath = TestDataStatic.testResultFolder + ".TemporaryDataFile/data.csv";
+
+        // Creates folder for temporarily storing gaze data if it does not exist
+        if (!Directory.Exists(TestDataStatic.temporaryDataFolderPath))
+        {
+            Directory.CreateDirectory(TestDataStatic.temporaryDataFolderPath);
+        }
+
+        temporaryDataFilePath = TestDataStatic.temporaryDataFolderPath + "data.csv";
 
         TestDataStatic.testIsRunning = false;
     }

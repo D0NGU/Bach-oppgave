@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.IO;
 
 /// <summary>
 /// Responsible for saving a created test
@@ -18,6 +19,12 @@ public class TestSaver : MonoBehaviour
 
     private void Awake()
     {
+        // Creates folders for tests if it does not exist
+        if (!Directory.Exists(TestDataStatic.testFolderPath))
+        {
+            Directory.CreateDirectory(TestDataStatic.testFolderPath);
+        }
+
         saveToFile = new();
     }
 
